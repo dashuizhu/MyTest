@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="btn_normal">#8a8a12</color>
+    <color name="btn_press">#a131a1</color>
+    <color name="white">#ffffff</color>
+    <color name="btn_send_textcolor">#999999</color>
+    <color name="black">#222222</color>
+    <color name="toolbar_spilt_line">#BAEAEAEA</color>
+    <color name="toolbar_btn_select">#D9D9D9</color>
+    <color name="toolbar_btn_nomal">@color/white</color>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="WheelView">
+        <attr name="wheel_textSize" format="dimension"></attr>
+        <attr name="wheel_selectColor" format="color"></attr>
+        <attr name="wheel_normalColor" format="color"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="EmoticonsIndicatorView">
+
+        <attr name="bmpNomal" format="reference" />
+
+        <attr name="bmpSelect" format="reference" />
+    </declare-styleable>
+
+
+        <attr name="main_bg" format="reference|color"/>
+        <attr name="main_textcolor" format="reference|color"/>
+        <attr name="colorheader" format="reference|color"/>
+        <attr name="second_textcolor" format="reference|color"/>
+
+</resources>

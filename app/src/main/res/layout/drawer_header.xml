@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:drawableRight="@mipmap/ic_launcher"
+        android:id="@+id/tv"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:lines="2"
+        android:text="阿斯顿发生的发送到发送到发戊二醛翁热无"
+        android:textSize="20sp" />
+    <!--幼儿园中班111111111122222222222222222223333333333333333444444444444444445555555555555555555666666666677777777777777-->
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+
+</LinearLayout>
+
+

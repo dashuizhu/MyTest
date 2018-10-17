@@ -1,0 +1,35 @@
+#Internal package file, do not edit.
+#Sat Oct 13 18:18:40 CST 2018
+7.path=lib/x86/libjcore125.so
+2.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+5.set=NATIVE_RESOURCE
+0.path=lib/mips/libjcore125.so
+2.baseType=DIRECTORY
+3.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+7.baseType=DIRECTORY
+2.set=NATIVE_RESOURCE
+1.path=lib/armeabi-v7a/libjcore125.so
+4.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/dexMerger/debug/0
+7.set=NATIVE_RESOURCE
+count=8
+5.baseType=DIRECTORY
+2.path=lib/mips64/libjcore125.so
+5.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+4.set=DEX
+3.path=lib/arm64-v8a/libjcore125.so
+6.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+3.baseType=DIRECTORY
+1.set=NATIVE_RESOURCE
+4.path=classes.dex
+7.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+6.set=NATIVE_RESOURCE
+1.baseType=DIRECTORY
+6.baseType=DIRECTORY
+5.path=lib/x86_64/libjcore125.so
+0.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+0.baseType=DIRECTORY
+3.set=NATIVE_RESOURCE
+6.path=lib/armeabi/libjcore125.so
+1.base=/Users/zhujiang/AndroidStudioProjects/MyTest/example/build/intermediates/transforms/stripDebugSymbol/debug/0
+4.baseType=DIRECTORY
+0.set=NATIVE_RESOURCE

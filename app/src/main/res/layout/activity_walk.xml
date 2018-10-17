@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zhujiang.myapplication.game.GameWalkActivity.WalkActivity">
+
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="6dp"
+        android:text="开始" />
+
+
+    <com.example.zhujiang.myapplication.game.GameWalkActivity.WalkViewBG
+        android:id="@+id/walkView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_tree"
+        android:layout_centerVertical="true" />
+
+    <ImageView
+        android:id="@+id/iv_bug"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/walkView"
+        android:layout_marginLeft="-50dp"
+        android:background="@mipmap/umeng_socialize_wechat" />
+
+
+
+    <!--<ImageView-->
+    <!--android:id="@+id/ivBug"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:visibility="gone"-->
+    <!--android:background="@mipmap/umeng_socialize_wechat"-->
+    <!--android:layout_alignTop="@id/walkView"-->
+    <!--android:layout_toLeftOf="@id/walkView"/>-->
+
+
+    <TextView
+        android:id="@+id/tv_tree"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="#00ba00"
+        android:gravity="center"
+        android:text="树"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/iv_successs"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/walkView"
+        android:layout_alignLeft="@id/tv_tree"
+        android:background="@mipmap/ic_launcher" />
+
+
+</RelativeLayout>

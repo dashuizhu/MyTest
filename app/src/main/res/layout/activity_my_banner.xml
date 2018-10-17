@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    tools:context="com.example.zhujiang.myapplication.banner.MyBannerActivity">
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:background="#A178a1"
+        android:layout_marginRight="32dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+        android:background="#1A731B"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+
+
+    <ImageView
+        android:id="@+id/image3"
+        android:layout_width="128dp"
+        android:layout_height="96dp"
+        android:background="#789123"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+
+
+
+
+
+
+
+
+</RelativeLayout>
