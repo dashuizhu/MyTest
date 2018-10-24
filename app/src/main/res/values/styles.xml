@@ -4,13 +4,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="colorheader">#66BCA9</item>
     </style>
-
-
+    
 
     <style name="night" parent="Theme.AppCompat.Light.NoActionBar">
 

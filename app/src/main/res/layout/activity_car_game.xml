@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fl"
+    android:id="@+id/rl_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.zhujiang.myapplication.game.GameActivity">
+    tools:context="com.example.zhujiang.myapplication.game.car.CarGameActivity">
 
 
     <LinearLayout
         android:id="@+id/ll_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:orientation="horizontal">
 
         <TextView
@@ -48,18 +50,13 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_confirm"
+
+    <com.example.zhujiang.myapplication.game.car.CarView
+        android:id="@+id/carView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="确认" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_vertical"/>
 
-    <com.example.zhujiang.myapplication.game.GameBgView
-        android:id="@+id/gameView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-
-</FrameLayout>
+</RelativeLayout>

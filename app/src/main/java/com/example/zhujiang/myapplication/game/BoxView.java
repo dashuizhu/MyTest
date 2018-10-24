@@ -19,6 +19,11 @@ public class BoxView extends AppCompatImageView {
         super(context, attrs);
     }
 
+    /**
+     * 是否为空盒子，true 可以放入东西
+     */
+    private boolean mEmptyBox;
+
     public int getEmptyPosition(int item) {
         for (int i=0; i< boxArray.length; i++) {
             if (boxArray[i] == item) {
@@ -48,5 +53,29 @@ public class BoxView extends AppCompatImageView {
 
     public String toBoxString() {
         return boxArray[0] +","+boxArray[1]+"," + boxArray[2];
+    }
+
+    public void setEmptyBox(boolean emptyBox) {
+        mEmptyBox = emptyBox;
+    }
+
+    public boolean isEmptyBox() {
+        return mEmptyBox;
+    }
+
+    public void init() {
+        for(int i=0; i<boxArray.length; i++) {
+            boxArray[i] = -1;
+        }
+    }
+
+    public int getSize() {
+        int size = 0;
+        for (int i=0; i< boxArray.length; i++) {
+            if (boxArray[i] != -1) {
+                size++;
+            }
+        }
+        return size;
     }
 }

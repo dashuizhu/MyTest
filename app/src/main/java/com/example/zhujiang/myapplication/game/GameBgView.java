@@ -1,5 +1,11 @@
 package com.example.zhujiang.myapplication.game;
 
+import android.animation.Animator;
+import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
@@ -8,10 +14,18 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import com.example.zhujiang.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * @author zhuj 2018/9/11 下午6:02.
@@ -23,16 +37,26 @@ public class GameBgView extends ViewGroup {
 
     //private ImageView mBoxView;
 
+    /**
+     * 固定可以移动的水果
+     */
     private List<ItemView> list = new ArrayList();
 
+    /**
+     * 已经放好的水果
+     */
+    private List<ItemView> boxItemList = new ArrayList<>();
+
+    /**
+     * 盘子，用于装水果
+     */
     private List<BoxView> boxList = new ArrayList<>();
     //private List<View> boxlist = new ArrayList();
     //private ImageView boxArray = new ImageView[3];
 
     //private int[] boxArray = new int[9];
 
-    private int mBox1Number = 0;
-    private int mBox2Number = 0;
+    private int itemWidth = 100;
 
     public GameBgView(Context context) {
         super(context);
@@ -79,6 +103,25 @@ public class GameBgView extends ViewGroup {
             }
         }
 
+        for (int i = 0; i < boxItemList.size(); i++) {
+            layoutParams = (MyLayoutParams) boxItemList.get(i).getLayoutParams();
+            view = boxItemList.get(i);
+            int getx = (int) view.getX();
+            int gety = (int) view.getY();
+            int left = view.getLeft();
+            int lpX = layoutParams.x;
+                ////这个x 、y为0
+                int x = layoutParams.x;
+                int y = layoutParams.y;
+                //这个回到原点
+                view.layout(x, y, x + view.getLayoutParams().width,
+                        y + view.getLayoutParams().height);
+
+                //这个回停止到本地
+                //view.layout((int)view.getX(), (int)view.getY(),(int)view.getX() + view.getLayoutParams().width,
+                //        (int)view.getY() + view.getLayoutParams().height);
+        }
+
 
     }
 
@@ -116,8 +159,8 @@ public class GameBgView extends ViewGroup {
             apple = new ItemView(getContext());
             apple.setMyId(i);
             apple.setImageResource(R.mipmap.ssdk_oks_classic_wechat);
-            MyLayoutParams lp = new MyLayoutParams(100, 100);
-            lp.x = 10 + i * 100;
+            MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
+            lp.x = 10 + i * itemWidth;
             lp.y = 10 + 500;
             apple.setSrcX((int) lp.x);
             apple.setSrcY((int) lp.y);
@@ -163,7 +206,7 @@ public class GameBgView extends ViewGroup {
                             BoxView mBoxView = null;
                             for (int j = 0; j < boxList.size(); j++) {
                                 mBoxView = boxList.get(j);
-                                if (onOver(v, mBoxView)) {
+                                if (mBoxView.isEmptyBox() && onOver(v, mBoxView)) {
                                     isInbox = true;
                                     break;
                                 }
@@ -287,7 +330,25 @@ public class GameBgView extends ViewGroup {
             });
         }
 
+        LayoutTransition transition = new LayoutTransition();
 
+        PropertyValuesHolder appearingScaleX = PropertyValuesHolder.ofFloat("scaleX", 0f,  1f, 1.2f, 1f);
+        PropertyValuesHolder appearingScaleY = PropertyValuesHolder.ofFloat("scaleY", 0f,  1f, 1.2f, 1f);
+        PropertyValuesHolder appearingAlpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
+        ObjectAnimator mAnimatorAppearing = ObjectAnimator.ofPropertyValuesHolder(this, appearingAlpha, appearingScaleX, appearingScaleY);
+        //为LayoutTransition设置动画及动画类型
+        //mAnimatorAppearing.setDuration(5000);
+        transition.setAnimator(LayoutTransition.APPEARING, mAnimatorAppearing);
+
+        PropertyValuesHolder disScaleX = PropertyValuesHolder.ofFloat("scaleX", 1f, 1.2f, 1.0f, 0f);
+        PropertyValuesHolder disScaleY = PropertyValuesHolder.ofFloat("scaleY", 1f, 1.2f, 1.0f, 0f);
+        PropertyValuesHolder disAlpha = PropertyValuesHolder.ofFloat("alpha", 1f, 0f);
+        ObjectAnimator mAnimatorDis = ObjectAnimator.ofPropertyValuesHolder(this, disAlpha, disScaleX, disScaleY);
+        //mAnimatorDis.setDuration(1000);
+        transition.setAnimator(LayoutTransition.DISAPPEARING, mAnimatorDis);
+
+        transition.setDuration(1000);
+        setLayoutTransition(transition);
     }
 
     public void startShow() {
@@ -316,8 +377,95 @@ public class GameBgView extends ViewGroup {
         }
     }
 
+    private int[] mBoxValueArray;
+    private int mEmptyBoxIndex;
 
-    public void reset(int box1, int box2) {
+    public boolean isRight() {
+        if (mBoxValueArray == null) {
+            return false;
+        }
+        int rightValue = mBoxValueArray[mEmptyBoxIndex];
+        int nowSize = boxList.get(mEmptyBoxIndex).getSize();
+        return rightValue == nowSize;
+    }
+
+    public void hideAnimation() {
+        for (int i=0;i< boxItemList.size(); i++) {
+            removeView(boxItemList.get(i));
+        }
+        boxItemList.clear();
+    }
+
+    public void initBox(final int[] boxValueArray,final int emptyIndex) {
+        mBoxValueArray = boxValueArray;
+        mEmptyBoxIndex = emptyIndex;
+
+        //所有位置归为
+        MyLayoutParams layoutParams;
+        for (int i=0; i< list.size(); i++) {
+            list.get(i).setSelected(false);
+            layoutParams = (MyLayoutParams) list.get(i).getLayoutParams();
+            layoutParams.x = list.get(i).getSrcX();
+            layoutParams.y = list.get(i).getSrcY();
+        }
+        requestLayout();
+
+
+
+        //ScaleAnimation scaleAnimation  = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        //scaleAnimation.setDuration(500);
+        //
+        //for (int i=0;i< boxItemList.size(); i++) {
+        //    boxItemList.get(i).startAnimation(scaleAnimation);
+        //}
+
+        //Observable.timer(500, TimeUnit.MILLISECONDS)
+        //        .observeOn(AndroidSchedulers.mainThread())
+        //        .subscribe(new Action1<Long>() {
+        //            @Override
+        //            public void call(Long aLong) {
+
+
+
+                        ItemView apple;
+                        for (int j=0; j<boxList.size(); j++) {
+
+                            int boxValue = boxValueArray[j];
+                            //为0的可以放水果， 不为0 表示不可以拖入
+                            boxList.get(j).setEmptyBox(j == emptyIndex);
+                            boxList.get(j).init();
+
+                            if (j == emptyIndex) {
+                                //空的盒子，不用添加view
+                                continue;
+                            }
+
+
+
+                            //给每个box 初始化水果个数
+                            for (int i = 0; i < boxValue; i++) {
+                                apple = new ItemView(getContext());
+                                apple.setImageResource(R.mipmap.ssdk_oks_classic_wechat);
+                                MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
+                                lp.x = (int) boxList.get(j).getX() + i * itemWidth;
+                                lp.y = (int) boxList.get(j).getY() + boxList.get(j).getHeight() - itemWidth;
+                                apple.setSrcX((int) lp.x);
+                                apple.setSrcY((int) lp.y);
+
+                                apple.setLayoutParams(lp);
+
+                                //apple.setAlpha(0.2f);
+                                //apple.startAnimation(animationSet);
+                                addView(apple);
+
+                                boxItemList.add(apple);
+                            }
+
+                        }
+
+                    //}
+                //});
+
 
     }
 

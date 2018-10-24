@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.support.annotation.RawRes;
 import com.example.zhujiang.myapplication.R;
 
 /**
@@ -15,11 +16,29 @@ public class SoundManager {
 
     private SoundPool mSoundPool;
 
+    /**
+     * 吃东西
+     */
     public static int VIDEO_EAT;
+    /**
+     * 移动
+     */
     public static int VIDEO_MOVE;
+    /**
+     * 陈宫
+     */
     public static int VIDEO_SUCCESS;
+    /**
+     * 失败
+     */
     public static int VIDEO_FAIL;
+    /**
+     *
+     */
     public static int VIDEO_BEGIN;
+    /**
+     * 游戏开始
+     */
     public static int VIDEO_GAME_START;
     public static int VIDEO_FORBID;
 
@@ -53,5 +72,13 @@ public class SoundManager {
 
     public void play(int i) {
         mSoundPool.play(i, 1f, 1f, 1, 0, 1);
+    }
+
+    public int loadRing(Context context,@RawRes int rawRes) {
+        return mSoundPool.load(context, rawRes, 1);
+    }
+
+    public int loadRing(Context context, String pathFile ) {
+        return mSoundPool.load(pathFile, 1);
     }
 }

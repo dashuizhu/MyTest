@@ -253,7 +253,9 @@
             android:screenOrientation="landscape" />
         <activity android:name=".banner.MyBannerActivity" />
         <activity android:name=".viewShare.ViewShare1Activity" />
-        <activity android:name=".viewShare.ViewShare2Activity"></activity>
+        <activity android:name=".viewShare.ViewShare2Activity" />
+        <activity android:name=".game.car.CarGameActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

@@ -27,6 +27,7 @@ import com.example.zhujiang.myapplication.fillblack.FillBlackActivity;
 import com.example.zhujiang.myapplication.game.GameActivity;
 import com.example.zhujiang.myapplication.game.GameActivity2;
 import com.example.zhujiang.myapplication.game.GameWalkActivity.WalkActivity;
+import com.example.zhujiang.myapplication.game.car.CarGameActivity;
 import com.example.zhujiang.myapplication.jchat.LoginActivity;
 import com.example.zhujiang.myapplication.likeView.LikeActivity;
 import com.example.zhujiang.myapplication.listView.ListViewActivity;
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     mMapList.add(new ActivityBean(BottomNavActivity.class, "底部按钮"));
     mMapList.add(new ActivityBean(WalkActivity.class, "游戏-虫子回家"));
     mMapList.add(new ActivityBean(GameActivity2.class, "游戏-识数水果"));
+    mMapList.add(new ActivityBean(CarGameActivity.class, "游戏-汽车识数"));
     mMapList.add(new ActivityBean(MyBannerActivity.class, "banner"));
     mMapList.add(new ActivityBean(ViewShare1Activity.class, "共享view"));
     mSimpleAdapter.notifyDataSetChanged();
@@ -209,4 +211,5 @@ public class MainActivity extends AppCompatActivity {
     double statusBarHeight = Math.ceil(25 * context.getResources().getDisplayMetrics().density);
     return statusBarHeight;
   }
+
 }

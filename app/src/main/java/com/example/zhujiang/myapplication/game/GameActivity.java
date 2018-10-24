@@ -19,6 +19,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+@Deprecated
 public class GameActivity extends AppCompatActivity {
 
     @BindView(R.id.fl) FrameLayout mFl;
