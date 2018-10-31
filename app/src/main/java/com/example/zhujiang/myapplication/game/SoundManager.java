@@ -81,4 +81,8 @@ public class SoundManager {
     public int loadRing(Context context, String pathFile ) {
         return mSoundPool.load(pathFile, 1);
     }
+
+    public SoundPool getSoundPool() {
+        return mSoundPool;
+    }
 }

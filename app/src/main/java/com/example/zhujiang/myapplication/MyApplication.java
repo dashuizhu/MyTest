@@ -8,6 +8,8 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 import cn.jpush.im.android.api.JMessageClient;
 import com.example.zhujiang.myapplication.floatview.permission.FloatWindowManager;
+import com.example.zhujiang.myapplication.utils.DensityHelp;
+import com.example.zhujiang.myapplication.utils.DensityUtil;
 import com.iflytek.cloud.SpeechUtility;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
@@ -43,9 +45,8 @@ public class MyApplication extends Application {
     Log.i("JMessage", "init");
     JMessageClient.setDebugMode(true);
     JMessageClient.init(this);
-
     SpeechUtility.createUtility(this, "appid=58c8e767");
-
+    DensityHelp.setDensity(this);
     registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
       @Override
       public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

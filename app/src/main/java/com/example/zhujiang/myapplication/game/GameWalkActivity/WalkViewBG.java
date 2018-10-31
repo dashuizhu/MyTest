@@ -3,7 +3,6 @@ package com.example.zhujiang.myapplication.game.GameWalkActivity;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -11,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import com.example.zhujiang.myapplication.R;
 import com.example.zhujiang.myapplication.game.MyLayoutParams;
 import com.example.zhujiang.myapplication.game.SoundManager;
+import com.example.zhujiang.myapplication.utils.DensityUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,12 +58,14 @@ public class WalkViewBG extends ViewGroup {
     /**
      * 正确的移动步骤
      */
-    private WlakView mWlakFrom, mWlakTo;
+    private WlakView mWlakFrom, mWlakTo, mWlakArrows;
 
     /**
      * 行走的路径
      */
     private List<Integer> mMoveList = new ArrayList<>();
+
+    private final int FRUIT_COUNT = 4;
 
     public WalkViewBG(Context context) {
         super(context);
@@ -70,6 +73,7 @@ public class WalkViewBG extends ViewGroup {
 
     public WalkViewBG(Context context, AttributeSet attrs) {
         super(context, attrs);
+        itemWidth = DensityUtil.dip2px(context, 50);
         initViews();
     }
 
@@ -90,6 +94,10 @@ public class WalkViewBG extends ViewGroup {
         MyLayoutParams paTo = (MyLayoutParams) mWlakTo.getLayoutParams();
         mWlakTo.layout(paTo.x, paTo.y, paTo.x + mWlakTo.getLayoutParams().width,
                 paTo.y + mWlakTo.getLayoutParams().height);
+
+        MyLayoutParams paArrow = (MyLayoutParams) mWlakArrows.getLayoutParams();
+        mWlakArrows.layout(paArrow.x, paArrow.y, paArrow.x + mWlakArrows.getLayoutParams().width,
+                paArrow.y + mWlakArrows.getLayoutParams().height);
     }
 
     @Override
@@ -101,8 +109,8 @@ public class WalkViewBG extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         measureChildren(widthMeasureSpec, heightMeasureSpec);
         //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        //设置最大高度， 固定
-        setMeasuredDimension(column  * itemWidth, (4 +2) * itemWidth);
+        //设置最大高度， 固定， 1.5是底部 from to ， 0。5的边距
+        setMeasuredDimension(column * itemWidth, (int) ((row + 1.5) * itemWidth));
         //setMeasuredDimension(column * itemWidth, row * itemWidth);
     }
 
@@ -115,7 +123,8 @@ public class WalkViewBG extends ViewGroup {
             walkView.setBackgroundResource(R.drawable.btn_walk_selector);
             lpBox = new MyLayoutParams(itemWidth, itemWidth);
             lpBox.x = itemWidth * (i % column);
-            lpBox.y = itemWidth * (i / column);
+            //表盘竖直居中， 1.5是 底部from  2 to 间距， 上下对称
+            lpBox.y = (int) (itemWidth * (i / column));
             walkView.setLayoutParams(lpBox);
 
             //int value = random.nextInt(2);
@@ -126,32 +135,38 @@ public class WalkViewBG extends ViewGroup {
             list.add(walkView);
         }
 
-
-
-
-
         mWlakFrom = new WlakView(getContext());
         mWlakFrom.setBackgroundResource(R.drawable.btn_walk_selector);
         lpBox = new MyLayoutParams(itemWidth, itemWidth);
-        lpBox.x = (int) (itemWidth * 0.5);
-        lpBox.y = itemWidth * (row +1);
+        lpBox.x = 0;
+        //表盘竖直居中， 1.5是 底部from  2 to 间距， 上下对称， 0。5是间距
+        lpBox.y = (int) (itemWidth * (row + 0.5));
         mWlakFrom.setLayoutParams(lpBox);
         addView(mWlakFrom);
 
+        mWlakArrows = new WlakView(getContext());
+        mWlakArrows.setBackgroundResource(R.mipmap.game_walk_arrow_right);
+        lpBox = new MyLayoutParams(itemWidth/2, itemWidth/2);
+        lpBox.x = (int) (itemWidth * 1);
+        lpBox.y = (int) (itemWidth * (row + 0.75));
+        mWlakArrows.setLayoutParams(lpBox);
+        addView(mWlakArrows);
 
         mWlakTo = new WlakView(getContext());
         mWlakTo.setBackgroundResource(R.drawable.btn_walk_selector);
         lpBox = new MyLayoutParams(itemWidth, itemWidth);
-        lpBox.x = itemWidth * 2;
-        lpBox.y = itemWidth * (row +1);
+        lpBox.x = (int) (itemWidth * 1.5);
+        lpBox.y = (int) (itemWidth * (row + 0.5));
         mWlakTo.setLayoutParams(lpBox);
         addView(mWlakTo);
 
 
-        int fromValue = random.nextInt(5);
-        int toValue = random.nextInt(5);
+
+        //随机生成 水果路线，
+        int fromValue = random.nextInt(FRUIT_COUNT);
+        int toValue = random.nextInt(FRUIT_COUNT);
         while (toValue == fromValue) {
-            toValue = random.nextInt(5);
+            toValue = random.nextInt(FRUIT_COUNT);
         }
         mWlakFrom.setValue(fromValue);
         mWlakTo.setValue(toValue);
@@ -159,8 +174,8 @@ public class WalkViewBG extends ViewGroup {
         final List<Integer> routerList = initRouter();
 
         // from to from to 这样奇数 偶数 循环
-        for (int i=0;i<routerList.size(); i++) {
-            if (i%2==0) {
+        for (int i = 0; i < routerList.size(); i++) {
+            if (i % 2 == 0) {
                 list.get(routerList.get(i)).setValue(fromValue);
             } else {
                 list.get(routerList.get(i)).setValue(toValue);
@@ -171,10 +186,9 @@ public class WalkViewBG extends ViewGroup {
         Set<Integer> set = new HashSet<>(routerList);
         for (int i = 0; i < list.size(); i++) {
             if (!set.contains(i)) {
-                list.get(i).setValue(random.nextInt(5));
+                list.get(i).setValue(random.nextInt(FRUIT_COUNT));
             }
         }
-
 
         setOnTouchListener(new OnTouchListener() {
             @Override
@@ -188,7 +202,8 @@ public class WalkViewBG extends ViewGroup {
                     if (mGameListener != null) {
                         mGameListener.onDrawing(true);
                     }
-                } else if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_CANCEL
+                        || event.getAction() == MotionEvent.ACTION_UP) {
                     if (mGameListener != null) {
                         mGameListener.onDrawing(false);
                     }
@@ -258,7 +273,8 @@ public class WalkViewBG extends ViewGroup {
                     if (last.getAnimation() != null) {
                         last.getAnimation().cancel();
                     }
-                    list.get(mLastPostion).setAlpha(1);
+                    //注意传入的int  float
+                    list.get(mLastPostion).setAlpha(1f);
                     list.get(mLastPostion).setStep(2);
                 }
 
@@ -270,15 +286,6 @@ public class WalkViewBG extends ViewGroup {
                         mGameListener.onWalkRounter(checkRouter());
                     }
                     mEnableWalk = false;
-                    //游戏难度提升
-                    //row ++;
-                    //column ++;
-                    //if (row>4) {
-                    //    row =4;
-                    //}
-                    //if (column>6) {
-                    //    column = 6;
-                    //}
                     return false;
                 }
 
@@ -287,15 +294,15 @@ public class WalkViewBG extends ViewGroup {
         });
     }
 
-    private boolean onOver(View iv1, View iv2) {
-        Rect currentViewRect = new Rect();
-        iv1.getGlobalVisibleRect(currentViewRect);
-
-        Rect secondRect = new Rect();
-        iv2.getGlobalVisibleRect(secondRect);
-        boolean onOver = Rect.intersects(currentViewRect, secondRect);
-        return onOver;
-    }
+    //private boolean onOver(View iv1, View iv2) {
+    //    Rect currentViewRect = new Rect();
+    //    iv1.getGlobalVisibleRect(currentViewRect);
+    //
+    //    Rect secondRect = new Rect();
+    //    iv2.getGlobalVisibleRect(secondRect);
+    //    boolean onOver = Rect.intersects(currentViewRect, secondRect);
+    //    return onOver;
+    //}
 
     private WalkGameListener mGameListener;
 
@@ -305,7 +312,14 @@ public class WalkViewBG extends ViewGroup {
 
     private boolean isRightWalk(int lastPostion, int nowPosition) {
         int disValue = Math.abs(nowPosition - lastPostion);
-        return (disValue == 1 || disValue == column);
+        if (disValue == 1) {
+            //必须是同一列， 才算正确，相当于就是往右移动1
+            return nowPosition / column == lastPostion / column;
+        } else if (disValue == column) {
+            //或者上下移动
+            return true;
+        }
+        return false;
     }
 
     public void resetAll() {
@@ -313,7 +327,7 @@ public class WalkViewBG extends ViewGroup {
 
         //棋盘个数发生了变化
         onLevelUp();
-        setMeasuredDimension(column  * itemWidth, (4 +2) * itemWidth);
+        setMeasuredDimension(column * itemWidth, (int) ((row + 1.5f) * itemWidth));
         removeAllViews();
         list.clear();
         //因为数据发生了变化，重新画图
@@ -324,11 +338,12 @@ public class WalkViewBG extends ViewGroup {
             walkView.setBackgroundResource(R.drawable.btn_walk_selector);
             lpBox = new MyLayoutParams(itemWidth, itemWidth);
             lpBox.x = itemWidth * (i % column);
-            lpBox.y = itemWidth * (i / column);
+            lpBox.y = (int) (itemWidth * (i / column));
             walkView.setLayoutParams(lpBox);
 
             //int value = random.nextInt(2);
             walkView.setStep(0);
+            walkView.setSelected(false);
             //walkView.setValue(value);
             addView(walkView);
 
@@ -338,17 +353,25 @@ public class WalkViewBG extends ViewGroup {
         mWlakFrom = new WlakView(getContext());
         mWlakFrom.setBackgroundResource(R.drawable.btn_walk_selector);
         lpBox = new MyLayoutParams(itemWidth, itemWidth);
-        lpBox.x = (int) (itemWidth * 0.5);
-        lpBox.y = itemWidth * (row +1);
+        lpBox.x = 0;
+        lpBox.y = (int) (itemWidth * (row + 0.5f));
         mWlakFrom.setLayoutParams(lpBox);
         addView(mWlakFrom);
+
+        mWlakArrows = new WlakView(getContext());
+        mWlakArrows.setBackgroundResource(R.mipmap.game_walk_arrow_right);
+        lpBox = new MyLayoutParams(itemWidth/2, itemWidth/2);
+        lpBox.x = (int) (itemWidth * 1);
+        lpBox.y = (int) (itemWidth * (row + 0.75));
+        mWlakArrows.setLayoutParams(lpBox);
+        addView(mWlakArrows);
 
 
         mWlakTo = new WlakView(getContext());
         mWlakTo.setBackgroundResource(R.drawable.btn_walk_selector);
         lpBox = new MyLayoutParams(itemWidth, itemWidth);
-        lpBox.x = itemWidth * 2;
-        lpBox.y = itemWidth * (row +1);
+        lpBox.x = (int) (itemWidth * 1.5);
+        lpBox.y = (int) (itemWidth * (row + 0.5f));
         mWlakTo.setLayoutParams(lpBox);
         addView(mWlakTo);
 
@@ -363,18 +386,17 @@ public class WalkViewBG extends ViewGroup {
         //    wlakView.setBackgroundResource(R.drawable.btn_walk_selector);
         //}
 
-        int fromValue = random.nextInt(5);
-        int toValue = random.nextInt(5);
+        int fromValue = random.nextInt(FRUIT_COUNT);
+        int toValue = random.nextInt(FRUIT_COUNT);
         while (toValue == fromValue) {
-            toValue = random.nextInt(5);
+            toValue = random.nextInt(FRUIT_COUNT);
         }
         mWlakFrom.setValue(fromValue);
         mWlakTo.setValue(toValue);
 
-
         List<Integer> routerList = initRouter();
-        for (int i=0;i<routerList.size(); i++) {
-            if (i%2==0) {
+        for (int i = 0; i < routerList.size(); i++) {
+            if (i % 2 == 0) {
                 list.get(routerList.get(i)).setValue(fromValue);
             } else {
                 list.get(routerList.get(i)).setValue(toValue);
@@ -385,10 +407,15 @@ public class WalkViewBG extends ViewGroup {
         Set<Integer> set = new HashSet<>(routerList);
         for (int i = 0; i < list.size(); i++) {
             if (!set.contains(i)) {
-                list.get(i).setValue(random.nextInt(5));
+                //给非路线图， 随机生成一种水果
+                int value = random.nextInt(FRUIT_COUNT);
+                //以下是否有必要，修改跟from to都不一致，或者不做限制
+                while (value == fromValue) {
+                    value = random.nextInt(FRUIT_COUNT);
+                }
+                list.get(i).setValue(value);
             }
         }
-
 
         mMoveList.clear();
         mLastPostion = -1;
@@ -425,7 +452,6 @@ public class WalkViewBG extends ViewGroup {
 
     /**
      * 获得正确的行走路线
-     * @return
      */
     private List<Integer> initRouter() {
 
@@ -434,7 +460,9 @@ public class WalkViewBG extends ViewGroup {
         int start = 0;
 
         //结束位置， 随机一行， 然后最后一列
-        int end = (random.nextInt(row)) * column + column - 1;
+        //int end = (random.nextInt(row)) * column + column - 1;
+        //修改为固定位置，第一排最后一个
+        int end = column + column - 1;
 
         //中间位置， 需要先走到中间位置，然后起点 、终点的最短路线，连接
         int middle = 0;
@@ -519,25 +547,22 @@ public class WalkViewBG extends ViewGroup {
 
     /**
      * 获得行走的胜利位置
-     * @return
      */
-    public int[] getEndPosition() {
-
-        int[] location = new int[2];
-        list.get(successPosition).getLocationInWindow(location);
-        //因为躲在树后面， 左移动画 一个宽度
-        location[0] = (int) (location[0] + itemWidth - getWidth());
-        //这里因为位置发生了变化，
-        return location;
-    }
-
+    //public int[] getEndPosition() {
+    //
+    //    int[] location = new int[2];
+    //    list.get(successPosition).getLocationInWindow(location);
+    //    //因为躲在树后面， 左移动画 一个宽度
+    //    location[0] = (int) (location[0] + itemWidth - getWidth());
+    //    //这里因为位置发生了变化，
+    //    return location;
+    //}
     public int getSuccessY() {
-       return (successPosition / column) * itemWidth;
+        return (successPosition / column) * itemWidth;
     }
 
     /**
      * 检查路径， 是否正确，是否按规划路线行走
-     * @return
      */
     private List<PositionBean> checkRouter() {
         if (alphaAnimation != null && alphaAnimation.isRunning()) {
@@ -545,7 +570,7 @@ public class WalkViewBG extends ViewGroup {
         }
         List<PositionBean> positionList = new ArrayList<>();
         PositionBean positionBean;
-        for (int i= 0; i < mMoveList.size(); i++) {
+        for (int i = 0; i < mMoveList.size(); i++) {
             positionBean = new PositionBean();
             //走动的位置
             int position = mMoveList.get(i);
@@ -553,7 +578,7 @@ public class WalkViewBG extends ViewGroup {
             int value = list.get(position).getValue();
             //判断顺序，偶数from  奇数to
             boolean isRight;
-            if (i%2==0) {
+            if (i % 2 == 0) {
                 isRight = (value == mWlakFrom.getValue());
             } else {
                 isRight = (value == mWlakTo.getValue());
@@ -565,35 +590,34 @@ public class WalkViewBG extends ViewGroup {
             positionBean.setY((int) list.get(position).getY());
             positionList.add(positionBean);
             if (!isRight) {
-                list.get(position).setBackgroundResource(R.color.colorAccent);
+                list.get(position).setBackgroundResource(R.drawable.bg_game_walk_step2);
                 alphaAnimation(list.get(position));
                 break;
             }
         }
 
-        positionList.get(positionList.size()-1).setEnd(true);
+        positionList.get(positionList.size() - 1).setEnd(true);
         return positionList;
     }
 
     public void cleanMoveRouter() {
         for (Integer position : mMoveList) {
             list.get(position).setStep(0);
-            list.get(position).setAlpha(1);
+            list.get(position).setAlpha(1f);
             list.get(position).setSelected(false);
         }
         mMoveList.clear();
         mLastPostion = -1;
     }
 
-
     private void onLevelUp() {
         //游戏难度提升
-        row ++;
-        column ++;
-        if (row>4) {
-            row =4;
+        row++;
+        column++;
+        if (row > 4) {
+            row = 4;
         }
-        if (column>6) {
+        if (column > 6) {
             column = 6;
         }
     }

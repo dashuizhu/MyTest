@@ -4,24 +4,26 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg_1"
     tools:context="com.example.zhujiang.myapplication.game.GameWalkActivity.WalkActivity">
 
 
     <Button
         android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="6dp"
-        android:text="开始" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/game_walk_play"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp" />
 
 
     <com.example.zhujiang.myapplication.game.GameWalkActivity.WalkViewBG
         android:id="@+id/walkView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tv_tree"
-        android:layout_centerVertical="true" />
+        android:layout_alignStart="@+id/iv_successs"
+        android:layout_marginTop="75dp"/>
+
 
     <ImageView
         android:id="@+id/iv_bug"
@@ -29,7 +31,7 @@
         android:layout_height="50dp"
         android:layout_alignTop="@id/walkView"
         android:layout_marginLeft="-50dp"
-        android:background="@mipmap/umeng_socialize_wechat" />
+        android:background="@mipmap/game_walk_bug" />
 
 
 
@@ -42,24 +44,36 @@
     <!--android:layout_alignTop="@id/walkView"-->
     <!--android:layout_toLeftOf="@id/walkView"/>-->
 
-
-    <TextView
-        android:id="@+id/tv_tree"
-        android:layout_width="150dp"
+    <View android:id="@+id/line_ver"
         android:layout_height="match_parent"
+        android:layout_width="1px"
+        android:layout_centerHorizontal="true"/>
+
+
+    <ImageView
+        android:id="@+id/tv_tree"
+        android:layout_width="375dp"
+        android:layout_height="375dp"
         android:layout_alignParentRight="true"
-        android:background="#00ba00"
+        android:background="@mipmap/bg_2"
         android:gravity="center"
-        android:text="树"
         android:textColor="@color/white" />
 
     <ImageView
         android:id="@+id/iv_successs"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="@mipmap/game_walk_dong"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/walkView"
-        android:layout_alignLeft="@id/tv_tree"
-        android:background="@mipmap/ic_launcher" />
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="135dp" />
+
+    <View
+        android:id="@+id/line_hor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerVertical="true" />
 
 
 </RelativeLayout>

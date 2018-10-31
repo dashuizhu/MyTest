@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.example.zhujiang.myapplication.TextActivity">
+
+
+    <!---->
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:fontFamily="serif-monospace"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字 serif-monospace"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字 sans-serif-condensed"-->
+        <!--android:fontFamily="sans-serif-condensed"/>-->
+
+
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字"/>-->
+
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:fontFamily="sans-serif"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字 sans-serif"/>-->
+
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:fontFamily="monospace"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字 monospace"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:fontFamily="sans-serif-smallcaps"-->
+        <!--android:text="12abAB文字 sans-serif-smallcaps"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:fontFamily="casual"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字 casual"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:fontFamily="cursive"-->
+        <!--android:text="12abAB文字 cursive"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20sp"-->
+        <!--android:fontFamily="serif"-->
+        <!--android:textColor="#4A4A4A"-->
+        <!--android:text="12abAB文字 serif"/>-->
+
+
+    <com.example.zhujiang.myapplication.game.wheel.DragerViewLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#ff12dd"/>
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="#abff78"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="#ffac32"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+    </com.example.zhujiang.myapplication.game.wheel.DragerViewLayout>
+
+</LinearLayout>

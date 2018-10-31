@@ -5,24 +5,20 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewParent;
-import android.view.ViewPropertyAnimator;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.zhujiang.myapplication.R;
-import com.example.zhujiang.myapplication.game.BitmapUtil;
 import com.example.zhujiang.myapplication.game.MyDrawable;
-import com.example.zhujiang.myapplication.game.MyValueAnimator;
 import com.example.zhujiang.myapplication.game.SoundManager;
+import com.example.zhujiang.myapplication.utils.DensityHelp;
 import com.example.zhujiang.myapplication.utils.DensityUtil;
 import com.example.zhujiang.myapplication.utils.ToastUtils;
 import java.util.List;
@@ -37,7 +33,7 @@ public class WalkActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_start) Button mBtnStart;
     @BindView(R.id.rl) RelativeLayout mRl;
-    @BindView(R.id.tv_tree) TextView mTvTree;
+    //@BindView(R.id.tv_tree) TextView mTvTree;
     @BindView(R.id.walkView) WalkViewBG mWalkView;
     @BindView(R.id.iv_bug) ImageView mIvBug;
     @BindView(R.id.iv_successs) ImageView mIvSuccess;
@@ -49,7 +45,7 @@ public class WalkActivity extends AppCompatActivity {
 
     private final int HIDDEN_TIME = 1500;
 
-    private final int ITEM_SIZE = 100;
+    private int ITEM_SIZE = 100;
 
     private ValueAnimator bugAlphaAnimation;
 
@@ -60,7 +56,9 @@ public class WalkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        DensityHelp.setOrientation(this, "height");
         setContentView(R.layout.activity_walk);
+        ITEM_SIZE = DensityUtil.dip2px(this, 50);
         ButterKnife.bind(this);
         SoundManager.getInstance(this);
         mWalkView.setWalkGameListener(new WalkGameListener() {
@@ -93,10 +91,9 @@ public class WalkActivity extends AppCompatActivity {
 
                                 //高度会发生变的时候的写法
                                 //这个是现对于原来的位置的
-                                ViewPropertyAnimator view = mIvSuccess.animate();
-                                float y = mWalkView.getSuccessY();
-                                view.translationY(y);
-
+                                //ViewPropertyAnimator view = mIvSuccess.animate();
+                                //float y = mWalkView.getSuccessY();
+                                //view.translationY(y);
 
                             }
                         });
@@ -136,40 +133,27 @@ public class WalkActivity extends AppCompatActivity {
                             @Override
                             public void call(final PositionBean positionBean) {
 
-                                if (positionBean.isEnd()) {
-                                    if (positionBean.isSuccess()) {
-                                        SoundManager.getInstance(WalkActivity.this)
-                                                .play(SoundManager.VIDEO_SUCCESS);
-                                    } else {
-                                        SoundManager.getInstance(WalkActivity.this)
-                                                .play(SoundManager.VIDEO_FAIL);
-                                    }
-                                } else {
-                                    SoundManager.getInstance(WalkActivity.this)
-                                            .play(SoundManager.VIDEO_EAT);
-                                }
                                 TranslateAnimation trans;
-                                float x = mIvBug.getX();
-                                float y = mIvBug.getY();
-                                float top = mIvBug.getTop();
-                                float left = mIvBug.getLeft();
+                                //float x = mIvBug.getX();
+                                //float y = mIvBug.getY();
+                                //float top = mIvBug.getTop();
+                                //float left = mIvBug.getLeft();
                                 final float newX = positionBean.getX() + mWalkView.getLeft();
                                 final float newY = positionBean.getY() + mWalkView.getTop();
                                 final float moveX = newX - mIvBug.getX();
                                 final float moveY = newY - mIvBug.getY();
 
-
                                 //mIvBug.animate().translationX(newX).translationY(newY).setDuration(500).start();
-                                Log.w("test", "startMove from "
-                                        + x
-                                        + ":"
-                                        + y
-                                        + "  new : "
-                                        + newX
-                                        + ":"
-                                        + newY);
+                                //Log.w("test", "startMove from "
+                                //        + x
+                                //        + ":"
+                                //        + y
+                                //        + "  new : "
+                                //        + newX
+                                //        + ":"
+                                //        + newY);
                                 trans = new TranslateAnimation(0, moveX, 0, moveY);
-                                trans.setDuration(600);
+                                trans.setDuration(450);
                                 trans.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
@@ -179,18 +163,18 @@ public class WalkActivity extends AppCompatActivity {
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
 
-                                        Log.w("test", "start onlayout "
-                                                + newX
-                                                + ":"
-                                                + newY
-                                                + "  "
-                                                + mIvBug.getWidth()
-                                                + " "
-                                                + mIvBug.getHeight()
-                                                + " "
-                                                + mIvBug.getLeft()
-                                                + " top: "
-                                                + mIvBug.getTop());
+                                        //Log.w("test", "start onlayout "
+                                        //        + newX
+                                        //        + ":"
+                                        //        + newY
+                                        //        + "  "
+                                        //        + mIvBug.getWidth()
+                                        //        + " "
+                                        //        + mIvBug.getHeight()
+                                        //        + " "
+                                        //        + mIvBug.getLeft()
+                                        //        + " top: "
+                                        //        + mIvBug.getTop());
                                         mIvBug.layout(mIvBug.getLeft() + (int) moveX,
                                                 mIvBug.getTop() + (int) moveY,
                                                 (int) mIvBug.getLeft() + (int) moveX + ITEM_SIZE,
@@ -209,6 +193,19 @@ public class WalkActivity extends AppCompatActivity {
                                     }
                                 });
                                 mIvBug.startAnimation(trans);
+
+                                if (positionBean.isEnd()) {
+                                    if (positionBean.isSuccess()) {
+                                        SoundManager.getInstance(WalkActivity.this)
+                                                .play(SoundManager.VIDEO_SUCCESS);
+                                    } else {
+                                        SoundManager.getInstance(WalkActivity.this)
+                                                .play(SoundManager.VIDEO_FAIL);
+                                    }
+                                } else {
+                                    SoundManager.getInstance(WalkActivity.this)
+                                            .play(SoundManager.VIDEO_EAT);
+                                }
                             }
                         });
             }
@@ -266,10 +263,10 @@ public class WalkActivity extends AppCompatActivity {
 
                 onShowAnimation();
 
-                ViewPropertyAnimator animator = mIvSuccess.animate();
-                float y = mWalkView.getSuccessY();
-                animator.setDuration(1000);
-                animator.translationY(y);
+                //ViewPropertyAnimator animator = mIvSuccess.animate();
+                //float y = mWalkView.getSuccessY();
+                //animator.setDuration(1000);
+                //animator.translationY(y);
 
                 //mSuccessPostionView.setOnClickListener(new View.OnClickListener() {
                 //    @Override
@@ -298,8 +295,6 @@ public class WalkActivity extends AppCompatActivity {
         //
         //            }
         //        });
-
-
 
     }
 
@@ -341,9 +336,9 @@ public class WalkActivity extends AppCompatActivity {
                         //view.translationY(newLocation[1] - lastLocation[1]);
 
                         //这个是现对于原来的位置的
-                        ViewPropertyAnimator view = mIvSuccess.animate();
-                        float y = mWalkView.getSuccessY();
-                        view.translationY(y);
+                        //ViewPropertyAnimator view = mIvSuccess.animate();
+                        //float y = mWalkView.getSuccessY();
+                        //view.translationY(y);
                         //mLastMoveY = (int) y;
 
                     }
@@ -351,6 +346,7 @@ public class WalkActivity extends AppCompatActivity {
     }
 
     private void onHideAnimation() {
+        mBtnStart.setEnabled(false);
         int phoneWidth = DensityUtil.getPhoneScreenWidth(this);
         int phoneHeight = DensityUtil.getPhoneScreenHeight(this);
         int x = (int) mWalkView.getX();
@@ -421,6 +417,7 @@ public class WalkActivity extends AppCompatActivity {
                 mWalkView.layout(mWalkView.getLeft() - mWalkView.getWidth(), mWalkView.getTop(),
                         mWalkView.getLeft(), mWalkView.getBottom());
                 onDrawingAnimation(false);
+                mBtnStart.setEnabled(true);
             }
 
             @Override

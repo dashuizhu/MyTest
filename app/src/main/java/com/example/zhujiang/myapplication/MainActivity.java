@@ -28,6 +28,7 @@ import com.example.zhujiang.myapplication.game.GameActivity;
 import com.example.zhujiang.myapplication.game.GameActivity2;
 import com.example.zhujiang.myapplication.game.GameWalkActivity.WalkActivity;
 import com.example.zhujiang.myapplication.game.car.CarGameActivity;
+import com.example.zhujiang.myapplication.game.wheel.FerrisGameActivity;
 import com.example.zhujiang.myapplication.jchat.LoginActivity;
 import com.example.zhujiang.myapplication.likeView.LikeActivity;
 import com.example.zhujiang.myapplication.listView.ListViewActivity;
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
       Intent intent = new Intent();
       intent.setClass(MainActivity.this, send);
       startActivity(intent);
-    } catch (ClassNotFoundException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -177,8 +178,10 @@ public class MainActivity extends AppCompatActivity {
     mMapList.add(new ActivityBean(WalkActivity.class, "游戏-虫子回家"));
     mMapList.add(new ActivityBean(GameActivity2.class, "游戏-识数水果"));
     mMapList.add(new ActivityBean(CarGameActivity.class, "游戏-汽车识数"));
+    mMapList.add(new ActivityBean(FerrisGameActivity.class, "游戏-摩天轮"));
     mMapList.add(new ActivityBean(MyBannerActivity.class, "banner"));
     mMapList.add(new ActivityBean(ViewShare1Activity.class, "共享view"));
+    mMapList.add(new ActivityBean(TextActivity.class, "TextView文字"));
     mSimpleAdapter.notifyDataSetChanged();
   }
 
