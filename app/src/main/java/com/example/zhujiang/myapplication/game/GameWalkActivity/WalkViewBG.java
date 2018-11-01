@@ -327,13 +327,31 @@ public class WalkViewBG extends ViewGroup {
 
         //棋盘个数发生了变化
         onLevelUp();
+        //1.5个是 底部  from -> to  指引高度
         setMeasuredDimension(column * itemWidth, (int) ((row + 1.5f) * itemWidth));
-        removeAllViews();
-        list.clear();
+        //removeAllViews();
         //因为数据发生了变化，重新画图
         WlakView walkView;
         MyLayoutParams lpBox;
-        for (int i = 0; i < row * column; i++) {
+        for (int i = 0; i < list.size(); i++) {
+            walkView = list.get(i);
+            walkView.setBackgroundResource(R.drawable.btn_walk_selector);
+            lpBox = new MyLayoutParams(itemWidth, itemWidth);
+            lpBox.x = itemWidth * (i % column);
+            lpBox.y = (int) (itemWidth * (i / column));
+            walkView.setLayoutParams(lpBox);
+
+            //int value = random.nextInt(2);
+            walkView.setStep(0);
+            walkView.setSelected(false);
+            walkView.setAlpha(1f);
+            //walkView.setValue(value);
+            //addView(walkView);
+            //
+            //list.add(walkView);
+        }
+
+        for (int i= list.size(); i < row * column; i++) {
             walkView = new WlakView(getContext());
             walkView.setBackgroundResource(R.drawable.btn_walk_selector);
             lpBox = new MyLayoutParams(itemWidth, itemWidth);
@@ -350,30 +368,30 @@ public class WalkViewBG extends ViewGroup {
             list.add(walkView);
         }
 
-        mWlakFrom = new WlakView(getContext());
+        //mWlakFrom = new WlakView(getContext());
         mWlakFrom.setBackgroundResource(R.drawable.btn_walk_selector);
         lpBox = new MyLayoutParams(itemWidth, itemWidth);
         lpBox.x = 0;
         lpBox.y = (int) (itemWidth * (row + 0.5f));
         mWlakFrom.setLayoutParams(lpBox);
-        addView(mWlakFrom);
+        //addView(mWlakFrom);
 
-        mWlakArrows = new WlakView(getContext());
+        //mWlakArrows = new WlakView(getContext());
         mWlakArrows.setBackgroundResource(R.mipmap.game_walk_arrow_right);
         lpBox = new MyLayoutParams(itemWidth/2, itemWidth/2);
         lpBox.x = (int) (itemWidth * 1);
         lpBox.y = (int) (itemWidth * (row + 0.75));
         mWlakArrows.setLayoutParams(lpBox);
-        addView(mWlakArrows);
+        //addView(mWlakArrows);
 
 
-        mWlakTo = new WlakView(getContext());
+        //mWlakTo = new WlakView(getContext());
         mWlakTo.setBackgroundResource(R.drawable.btn_walk_selector);
         lpBox = new MyLayoutParams(itemWidth, itemWidth);
         lpBox.x = (int) (itemWidth * 1.5);
         lpBox.y = (int) (itemWidth * (row + 0.5f));
         mWlakTo.setLayoutParams(lpBox);
-        addView(mWlakTo);
+        //addView(mWlakTo);
 
         //如果个数不发生变化，就用下面这套
         //WlakView wlakView;
@@ -600,6 +618,9 @@ public class WalkViewBG extends ViewGroup {
         return positionList;
     }
 
+    /**
+     * 清除当前的已经划过的行走路线
+     */
     public void cleanMoveRouter() {
         for (Integer position : mMoveList) {
             list.get(position).setStep(0);
@@ -620,5 +641,11 @@ public class WalkViewBG extends ViewGroup {
         if (column > 6) {
             column = 6;
         }
+    }
+
+    public void release() {
+        list.clear();
+        removeAllViews();
+        clearAnimation();
     }
 }

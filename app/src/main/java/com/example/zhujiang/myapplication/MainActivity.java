@@ -39,6 +39,7 @@ import com.example.zhujiang.myapplication.runText.RunTextActivity;
 import com.example.zhujiang.myapplication.shared.SharedActivity;
 import com.example.zhujiang.myapplication.statusBar.StatusBarActivity;
 import com.example.zhujiang.myapplication.theme.ThemeChangeActivity;
+import com.example.zhujiang.myapplication.utils.DensityHelp;
 import com.example.zhujiang.myapplication.utils.SharedPreUser;
 import com.example.zhujiang.myapplication.view.RoundProgressActivity;
 import com.example.zhujiang.myapplication.view.ViewActivity;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     //transitionSystemBar();
+    DensityHelp.setOrientationWidth(this, false);
     setContentView(R.layout.activity_main);
     initViews();
 

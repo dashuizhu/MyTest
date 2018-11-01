@@ -19,11 +19,11 @@ public class DensityHelp {
     /**
      * 设计图的宽度， 6sp尺寸
      */
-    private final static float DESIGN_WIDTH = 667f;
+    private final static float DESIGN_WIDTH = 375f;
     /**
      * 设计图的高度, 6sp尺寸
      */
-    private final static float DESIGN_HEIGHT = 375f;
+    private final static float DESIGN_HEIGHT = 667f;
 
     private static float appDensity;
     private static float appScaledDensity;
@@ -64,17 +64,21 @@ public class DensityHelp {
      * 默认适配方向 宽度
      * @param activity
      */
-    public static void setDefault(Activity activity) {
-        setAppOrientation(activity, "width");
-    }
+    //public static void setDefault(Activity activity) {
+    //    setAppOrientation(activity, "width");
+    //}
 
     /**
      * 更改适配方向
      * @param activity
      * @param orientation width height
      */
-    public static void setOrientation(Activity activity, String orientation) {
-        setAppOrientation(activity, orientation);
+    public static void setOrientationWidth(Activity activity, boolean isLand) {
+        setAppOrientation(activity, "width", isLand);
+    }
+
+    public static void setOrientationHeight(Activity activity, boolean isLand) {
+        setAppOrientation(activity, "height", isLand);
     }
 
     /**
@@ -85,14 +89,17 @@ public class DensityHelp {
      * <p>
      * orientation:方向值,传入width或height
      */
-    private static void setAppOrientation(@Nullable Activity activity, String orientation) {
+    private static void setAppOrientation(@Nullable Activity activity, String orientation, boolean isLand) {
 
         float targetDensity;
 
+
         if (orientation.equals("height")) {
-            targetDensity = (appDisplayMetrics.heightPixels - barHeight) / DESIGN_HEIGHT;
+            float tager = isLand ? DESIGN_WIDTH : DESIGN_HEIGHT;
+            targetDensity = (appDisplayMetrics.heightPixels - barHeight) / tager;
         } else {
-            targetDensity = appDisplayMetrics.widthPixels / DESIGN_WIDTH;
+            float tager = isLand ? DESIGN_HEIGHT : DESIGN_WIDTH;
+            targetDensity = appDisplayMetrics.widthPixels / tager;
         }
 
         float targetScaledDensity = targetDensity * (appScaledDensity / appDensity);

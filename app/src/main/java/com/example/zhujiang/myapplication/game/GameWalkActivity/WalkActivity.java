@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -24,6 +25,7 @@ import com.example.zhujiang.myapplication.utils.ToastUtils;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -49,14 +51,15 @@ public class WalkActivity extends AppCompatActivity {
 
     private ValueAnimator bugAlphaAnimation;
 
-    private MyDrawable mMyDrawable;
+
+    Subscription mRosultWakSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        DensityHelp.setOrientation(this, "height");
+        DensityHelp.setOrientationHeight(this, true);
         setContentView(R.layout.activity_walk);
         ITEM_SIZE = DensityUtil.dip2px(this, 50);
         ButterKnife.bind(this);
@@ -112,9 +115,9 @@ public class WalkActivity extends AppCompatActivity {
                 if (bugAlphaAnimation != null && bugAlphaAnimation.isRunning()) {
                     bugAlphaAnimation.cancel();
                 }
-
+                mBtnStart.setEnabled(false);
                 mIvBug.setAlpha(1f);
-                Observable.from(list)
+                mRosultWakSubscription = Observable.from(list)
                         .map(new Func1<PositionBean, PositionBean>() {
                             @Override
                             public PositionBean call(PositionBean positionBean) {
@@ -306,7 +309,7 @@ public class WalkActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_start)
     public void btnClick() {
-
+        mIvBug.setAlpha(0f);
         onHideAnimation();
         Observable.timer(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -465,6 +468,7 @@ public class WalkActivity extends AppCompatActivity {
 
             }
         });
+        mIvBug.setAlpha(1f);
         mIvBug.startAnimation(bugTranslate);
     }
 
@@ -498,5 +502,18 @@ public class WalkActivity extends AppCompatActivity {
         if (!bugAlphaAnimation.isRunning()) {
             bugAlphaAnimation.start();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mWalkView.release();
+        if (mRosultWakSubscription != null) {
+            if (!mRosultWakSubscription.isUnsubscribed()) {
+                mRosultWakSubscription.unsubscribe();
+            }
+            mRosultWakSubscription = null;
+        }
+        SoundManager.getInstance(this).getSoundPool().release();
+        super.onDestroy();
     }
 }

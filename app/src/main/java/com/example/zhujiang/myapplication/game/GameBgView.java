@@ -1,31 +1,21 @@
 package com.example.zhujiang.myapplication.game;
 
-import android.animation.Animator;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.IdRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.widget.ImageView;
 import com.example.zhujiang.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import java.util.Random;
 
 /**
  * @author zhuj 2018/9/11 下午6:02.
@@ -58,12 +48,15 @@ public class GameBgView extends ViewGroup {
 
     private int itemWidth = 100;
 
+    private int mBackgourRes;
+
     public GameBgView(Context context) {
         super(context);
     }
 
     public GameBgView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mBackgourRes = getFrultBackgroud();
         initViews();
     }
 
@@ -110,19 +103,16 @@ public class GameBgView extends ViewGroup {
             int gety = (int) view.getY();
             int left = view.getLeft();
             int lpX = layoutParams.x;
-                ////这个x 、y为0
-                int x = layoutParams.x;
-                int y = layoutParams.y;
-                //这个回到原点
-                view.layout(x, y, x + view.getLayoutParams().width,
-                        y + view.getLayoutParams().height);
+            ////这个x 、y为0
+            int x = layoutParams.x;
+            int y = layoutParams.y;
+            //这个回到原点
+            view.layout(x, y, x + view.getLayoutParams().width, y + view.getLayoutParams().height);
 
-                //这个回停止到本地
-                //view.layout((int)view.getX(), (int)view.getY(),(int)view.getX() + view.getLayoutParams().width,
-                //        (int)view.getY() + view.getLayoutParams().height);
+            //这个回停止到本地
+            //view.layout((int)view.getX(), (int)view.getY(),(int)view.getX() + view.getLayoutParams().width,
+            //        (int)view.getY() + view.getLayoutParams().height);
         }
-
-
     }
 
     @Override
@@ -142,7 +132,8 @@ public class GameBgView extends ViewGroup {
         MyLayoutParams lpBox;
         for (int i = 0; i < 3; i++) {
             mBoxView = new BoxView(getContext());
-            mBoxView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.toolbar_spilt_line));
+            mBoxView.setBackgroundColor(
+                    ContextCompat.getColor(getContext(), R.color.toolbar_spilt_line));
             lpBox = new MyLayoutParams(300, 100);
             lpBox.x = 100 + 400 * i;
             lpBox.y = 240;
@@ -152,13 +143,13 @@ public class GameBgView extends ViewGroup {
             boxList.add(mBoxView);
         }
 
-
+        //mBackgourRes = getFrultBackgroud();
 
         ItemView apple;
         for (int i = 1; i < 11; i++) {
             apple = new ItemView(getContext());
             apple.setMyId(i);
-            apple.setImageResource(R.mipmap.ssdk_oks_classic_wechat);
+            apple.setImageResource(mBackgourRes);
             MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
             lp.x = 10 + i * itemWidth;
             lp.y = 10 + 500;
@@ -221,7 +212,7 @@ public class GameBgView extends ViewGroup {
                                         for (int j = 0; j < boxList.size(); j++) {
                                             oldBox = boxList.get(j);
                                             int position = oldBox.getBoxPostion(itemView.getMyId());
-                                            if (position>=0) {
+                                            if (position >= 0) {
                                                 oldBox.getBoxArray()[position] = -1;
                                                 break;
                                             }
@@ -229,8 +220,7 @@ public class GameBgView extends ViewGroup {
                                     }
 
                                     layoutParams.isDrag = true;
-                                    layoutParams.x =
-                                            (int) mBoxView.getX() + boxPosition * v.getWidth();
+                                    layoutParams.x = (int) mBoxView.getLayoutX(boxPosition);
                                     layoutParams.y = (int) mBoxView.getY() + mBoxView.getHeight()
                                             - v.getHeight();
                                     requestLayout();
@@ -246,14 +236,14 @@ public class GameBgView extends ViewGroup {
                                     for (int j = 0; j < boxList.size(); j++) {
                                         mBoxView = boxList.get(j);
                                         int position = mBoxView.getBoxPostion(itemView.getMyId());
-                                        if (position>=0) {
+                                        if (position >= 0) {
                                             //mBoxView.getBoxArray()[position] = -1;
                                             //飞到原来的盒子当中
                                             layoutParams.isDrag = true;
-                                            layoutParams.x =
-                                                    (int) mBoxView.getX() + position * v.getWidth();
-                                            layoutParams.y = (int) mBoxView.getY() + mBoxView.getHeight()
-                                                    - v.getHeight();
+                                            layoutParams.x = (int) mBoxView.getLayoutX(position);
+                                            layoutParams.y =
+                                                    (int) mBoxView.getY() + mBoxView.getHeight() - v
+                                                            .getHeight();
                                             requestLayout();
                                             layoutParams.isDrag = false;
                                             requestLayout();
@@ -263,7 +253,6 @@ public class GameBgView extends ViewGroup {
                                             return false;
                                         }
                                     }
-
                                 }
                             }
                             //原来有位置 ，但是当前在盒子外面， 就回到底部，将原来位置清空
@@ -271,9 +260,8 @@ public class GameBgView extends ViewGroup {
                                 for (int j = 0; j < boxList.size(); j++) {
                                     mBoxView = boxList.get(j);
                                     int position = mBoxView.getBoxPostion(itemView.getMyId());
-                                    if (position>=0) {
+                                    if (position >= 0) {
                                         mBoxView.getBoxArray()[position] = -1;
-
                                     }
                                 }
                             }
@@ -332,10 +320,14 @@ public class GameBgView extends ViewGroup {
 
         LayoutTransition transition = new LayoutTransition();
 
-        PropertyValuesHolder appearingScaleX = PropertyValuesHolder.ofFloat("scaleX", 0f,  1f, 1.2f, 1f);
-        PropertyValuesHolder appearingScaleY = PropertyValuesHolder.ofFloat("scaleY", 0f,  1f, 1.2f, 1f);
+        PropertyValuesHolder appearingScaleX =
+                PropertyValuesHolder.ofFloat("scaleX", 0f, 1f, 1.2f, 1f);
+        PropertyValuesHolder appearingScaleY =
+                PropertyValuesHolder.ofFloat("scaleY", 0f, 1f, 1.2f, 1f);
         PropertyValuesHolder appearingAlpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
-        ObjectAnimator mAnimatorAppearing = ObjectAnimator.ofPropertyValuesHolder(this, appearingAlpha, appearingScaleX, appearingScaleY);
+        ObjectAnimator mAnimatorAppearing =
+                ObjectAnimator.ofPropertyValuesHolder(this, appearingAlpha, appearingScaleX,
+                        appearingScaleY);
         //为LayoutTransition设置动画及动画类型
         //mAnimatorAppearing.setDuration(5000);
         transition.setAnimator(LayoutTransition.APPEARING, mAnimatorAppearing);
@@ -343,7 +335,8 @@ public class GameBgView extends ViewGroup {
         PropertyValuesHolder disScaleX = PropertyValuesHolder.ofFloat("scaleX", 1f, 1.2f, 1.0f, 0f);
         PropertyValuesHolder disScaleY = PropertyValuesHolder.ofFloat("scaleY", 1f, 1.2f, 1.0f, 0f);
         PropertyValuesHolder disAlpha = PropertyValuesHolder.ofFloat("alpha", 1f, 0f);
-        ObjectAnimator mAnimatorDis = ObjectAnimator.ofPropertyValuesHolder(this, disAlpha, disScaleX, disScaleY);
+        ObjectAnimator mAnimatorDis =
+                ObjectAnimator.ofPropertyValuesHolder(this, disAlpha, disScaleX, disScaleY);
         //mAnimatorDis.setDuration(1000);
         transition.setAnimator(LayoutTransition.DISAPPEARING, mAnimatorDis);
 
@@ -371,9 +364,9 @@ public class GameBgView extends ViewGroup {
     }
 
     private void printlnBox() {
-        for (int i=0; i<boxList.size(); i++) {
+        for (int i = 0; i < boxList.size(); i++) {
             boxList.get(i).getBoxArray();
-            Log.w("test", " box"+i +" : " + boxList.get(i).toBoxString());
+            Log.w("test", " box" + i + " : " + boxList.get(i).toBoxString());
         }
     }
 
@@ -390,27 +383,27 @@ public class GameBgView extends ViewGroup {
     }
 
     public void hideAnimation() {
-        for (int i=0;i< boxItemList.size(); i++) {
+        for (int i = 0; i < boxItemList.size(); i++) {
             removeView(boxItemList.get(i));
         }
         boxItemList.clear();
     }
 
-    public void initBox(final int[] boxValueArray,final int emptyIndex) {
+    public void initBox(final int[] boxValueArray, final int emptyIndex) {
         mBoxValueArray = boxValueArray;
         mEmptyBoxIndex = emptyIndex;
 
+        //mBackgourRes = getFrultBackgroud();
+
         //所有位置归为
         MyLayoutParams layoutParams;
-        for (int i=0; i< list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             list.get(i).setSelected(false);
             layoutParams = (MyLayoutParams) list.get(i).getLayoutParams();
             layoutParams.x = list.get(i).getSrcX();
             layoutParams.y = list.get(i).getSrcY();
         }
         requestLayout();
-
-
 
         //ScaleAnimation scaleAnimation  = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         //scaleAnimation.setDuration(500);
@@ -425,48 +418,60 @@ public class GameBgView extends ViewGroup {
         //            @Override
         //            public void call(Long aLong) {
 
+        ItemView apple;
+        for (int j = 0; j < boxList.size(); j++) {
 
+            int boxValue = boxValueArray[j];
+            //为0的可以放水果， 不为0 表示不可以拖入
+            boxList.get(j).setEmptyBox(j == emptyIndex);
+            boxList.get(j).init();
 
-                        ItemView apple;
-                        for (int j=0; j<boxList.size(); j++) {
+            if (j == emptyIndex) {
+                //空的盒子，不用添加view
+                continue;
+            }
 
-                            int boxValue = boxValueArray[j];
-                            //为0的可以放水果， 不为0 表示不可以拖入
-                            boxList.get(j).setEmptyBox(j == emptyIndex);
-                            boxList.get(j).init();
+            //给每个box 初始化水果个数
+            for (int i = 0; i < boxValue; i++) {
+                apple = new ItemView(getContext());
+                apple.setImageResource(mBackgourRes);
+                MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
+                lp.x = (int) boxList.get(j).getX() + i * itemWidth;
+                lp.y = (int) boxList.get(j).getY() + boxList.get(j).getHeight() - itemWidth;
+                apple.setSrcX((int) lp.x);
+                apple.setSrcY((int) lp.y);
 
-                            if (j == emptyIndex) {
-                                //空的盒子，不用添加view
-                                continue;
-                            }
+                apple.setLayoutParams(lp);
 
+                //apple.setAlpha(0.2f);
+                //apple.startAnimation(animationSet);
+                addView(apple);
 
-
-                            //给每个box 初始化水果个数
-                            for (int i = 0; i < boxValue; i++) {
-                                apple = new ItemView(getContext());
-                                apple.setImageResource(R.mipmap.ssdk_oks_classic_wechat);
-                                MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
-                                lp.x = (int) boxList.get(j).getX() + i * itemWidth;
-                                lp.y = (int) boxList.get(j).getY() + boxList.get(j).getHeight() - itemWidth;
-                                apple.setSrcX((int) lp.x);
-                                apple.setSrcY((int) lp.y);
-
-                                apple.setLayoutParams(lp);
-
-                                //apple.setAlpha(0.2f);
-                                //apple.startAnimation(animationSet);
-                                addView(apple);
-
-                                boxItemList.add(apple);
-                            }
-
-                        }
-
-                    //}
-                //});
-
-
+                boxItemList.add(apple);
+            }
+        }
     }
 
+
+    private @IdRes int getFrultBackgroud() {
+        Random random = new Random();
+        int value = random.nextInt(4);
+        int resId;
+        switch (value) {
+            case 0:
+                resId = R.mipmap.fruit_1;
+                break;
+            case 1:
+                resId = R.mipmap.fruit_2;
+                break;
+            case 2:
+                resId = R.mipmap.fruit_3;
+                break;
+            case 3:
+                default:
+                    resId = R.mipmap.fruit_4;
+                    break;
+        }
+        return resId;
+    }
 }
