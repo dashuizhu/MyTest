@@ -42,18 +42,21 @@ public class QmuiWebActivity extends AppCompatActivity {
         mWebView.loadUrl("http://www.baidu.com");
         mWebView.setWebViewClient(new QMUIWebViewClient(false, true){
 
-            private static final String CUSTOM_KEY = "pweview-";//自定义协议前缀
+            //自定义协议前缀, 用来识别 是否是直接引用 本地的库文件，
+            private static final String CUSTOM_KEY = "pweview-";
 
             /**
-             *
+             * assets中的文件 一定要与 h5页面所使用的文件一致
              * @return 本地jquery
              */
             private WebResourceResponse editResponse(String urlName) {
                 try {
                     if (urlName.endsWith(".js")) {
+                        //替换对应的 js文件
                         return new WebResourceResponse("application/x-javascript", "utf-8",
                                 QmuiWebActivity.this.getAssets().open(urlName));
                     } else if (urlName.endsWith(".css")) {
+                        //替换对应的css文件
                         return new WebResourceResponse("text/css", "utf-8",
                                 QmuiWebActivity.this.getAssets().open(urlName));
                     }
