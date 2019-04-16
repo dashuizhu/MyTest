@@ -9,6 +9,13 @@
     tools:context="com.example.zhujiang.myapplication.TextActivity">
 
 
+
+    <com.example.zhujiang.myapplication.view.MyImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/app_guard_chat_btn_press"/>
+
+
     <!---->
     <!--<TextView-->
         <!--android:layout_width="350dp"-->

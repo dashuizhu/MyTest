@@ -2,8 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
-    defaultConfig {
+  defaultConfig {
         applicationId "im.sdk.debug"
         minSdkVersion 14
         targetSdkVersion 27

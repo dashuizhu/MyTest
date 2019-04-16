@@ -71,7 +71,6 @@ public class DensityHelp {
     /**
      * 更改适配方向
      * @param activity
-     * @param orientation width height
      */
     public static void setOrientationWidth(Activity activity, boolean isLand) {
         setAppOrientation(activity, "width", isLand);

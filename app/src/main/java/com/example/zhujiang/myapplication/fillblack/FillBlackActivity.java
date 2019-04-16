@@ -1,6 +1,7 @@
 package com.example.zhujiang.myapplication.fillblack;
 
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.graphics.Outline;
 import android.graphics.Rect;
@@ -14,10 +15,11 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.example.zhujiang.myapplication.R;
-import com.example.zhujiang.myapplication.game.MyValueAnimator;
 import com.example.zhujiang.myapplication.utils.DensityUtil;
 
 public class FillBlackActivity extends AppCompatActivity {
@@ -36,8 +38,8 @@ public class FillBlackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
-                WindowManager.LayoutParams. FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fill_black);
         ButterKnife.bind(this);
 
@@ -90,7 +92,7 @@ public class FillBlackActivity extends AppCompatActivity {
                         lastX = (int) event.getRawX();
                         lastY = (int) event.getRawY();
                         getXy();
-                        Log.w("test", " oldx: " + oldX + " y:"+ oldY);
+                        Log.w("test", " oldx: " + oldX + " y:" + oldY);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         //计算事件的偏移
@@ -99,7 +101,7 @@ public class FillBlackActivity extends AppCompatActivity {
                         //根据事件的偏移来移动imageView
                         int left = mIvChatNormal.getLeft() + dx;
                         int top = mIvChatNormal.getTop() + dy;
-                        Log.w("test", " move: " + mIvChatNormal.getLeft() + " x:"+ dx);
+                        Log.w("test", " move: " + mIvChatNormal.getLeft() + " x:" + dx);
 
                         if (left < 0) {
                             left = 0;
@@ -139,7 +141,7 @@ public class FillBlackActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
                         //oldY = oldY - 44;
-                        Log.w("test", " up " + oldX + " y:"+ oldY);
+                        Log.w("test", " up " + oldX + " y:" + oldY);
                         //mIvChatNormal.layout(oldX, oldY, oldX + mIvChatNormal.getWidth(),
                         //        oldY + mIvChatNormal.getHeight());
 
@@ -147,20 +149,18 @@ public class FillBlackActivity extends AppCompatActivity {
                         //animator.setDuration(1500).start();
 
                         ValueAnimator animator1 = ValueAnimator.ofInt(0, 100).setDuration(1000);
-                        animator1.addUpdateListener(
-                                new ValueAnimator.AnimatorUpdateListener() {
-                                    @Override
-                                    public void onAnimationUpdate(ValueAnimator animation) {
-                                        int value = (int) animation.getAnimatedValue();
+                        animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                int value = (int) animation.getAnimatedValue();
 
-                                        int x = eventX + (oldX - eventX ) * value/100;
-                                        int y = eventY + (oldY - eventY ) * value/100;
-                                        Log.w("test", value+" anim " + x + " y:"+ y);
-                                        mIvChatNormal.layout(x, y, x + mIvChatNormal.getWidth(),
-                                                        y + mIvChatNormal.getHeight());
-
-                                    }
-                                });
+                                int x = eventX + (oldX - eventX) * value / 100;
+                                int y = eventY + (oldY - eventY) * value / 100;
+                                Log.w("test", value + " anim " + x + " y:" + y);
+                                mIvChatNormal.layout(x, y, x + mIvChatNormal.getWidth(),
+                                        y + mIvChatNormal.getHeight());
+                            }
+                        });
                         animator1.start();
 
                         break;
@@ -201,7 +201,6 @@ public class FillBlackActivity extends AppCompatActivity {
 
     private void startViewMove(ImageView iv, float nowX, float nowY, float destX, float destY) {
 
-
     }
 
     private void getXy() {
@@ -209,5 +208,36 @@ public class FillBlackActivity extends AppCompatActivity {
         mIvChatNormal.getLocationInWindow(position);
         oldX = position[0];
         oldY = position[1];
+    }
+
+    int x = 100;
+
+    @OnClick(R.id.iv1)
+    public void onViewClicked() {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mIv1.getLayoutParams();
+        String str = " " + mIv1.getX() +":"+mIv1.getY() + " left: "+mIv1.getLeft() +" top:" + mIv1.getTop()
+                +" " + layoutParams.leftMargin ;
+        Log.w("test", str);
+        x+=100;
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("x", x);
+        //PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 100f);
+
+        ObjectAnimator.ofPropertyValuesHolder(mIv1, pvhX)
+                .setDuration(1000).start();
+
+    }
+
+    @OnClick(R.id.iv2)
+    public void onViewClicked2() {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mIv1.getLayoutParams();
+        x = 100;
+        String str = " " + mIv1.getX() +":"+mIv1.getY() + " left: "+mIv1.getLeft() +" top:" + mIv1.getTop()
+                +" " + layoutParams.leftMargin ;
+        Log.w("test", str);
+
+        mIv1.invalidate(250, 400, 250+mIv1.getWidth(), 400+mIv1.getHeight());
+        //mIv1.requestLayout();g
+        //mIv1.invalidate();
+
     }
 }

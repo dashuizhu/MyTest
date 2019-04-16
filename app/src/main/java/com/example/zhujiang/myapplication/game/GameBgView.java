@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.zhujiang.myapplication.R;
+import com.example.zhujiang.myapplication.utils.DensityUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -128,15 +129,17 @@ public class GameBgView extends ViewGroup {
     }
 
     private void initViews() {
+        itemWidth = DensityUtil.dip2px(getContext(), 50);
         BoxView mBoxView;
         MyLayoutParams lpBox;
+        int boxWidth = 3 * itemWidth;
         for (int i = 0; i < 3; i++) {
             mBoxView = new BoxView(getContext());
             mBoxView.setBackgroundColor(
                     ContextCompat.getColor(getContext(), R.color.toolbar_spilt_line));
-            lpBox = new MyLayoutParams(300, 100);
-            lpBox.x = 100 + 400 * i;
-            lpBox.y = 240;
+            lpBox = new MyLayoutParams(boxWidth, boxWidth);
+            lpBox.x = DensityUtil.dip2px(getContext(), 54) * (i+1) + (i) * boxWidth;
+            lpBox.y = 2*itemWidth;
             mBoxView.setLayoutParams(lpBox);
             addView(mBoxView);
 
@@ -146,13 +149,14 @@ public class GameBgView extends ViewGroup {
         //mBackgourRes = getFrultBackgroud();
 
         ItemView apple;
-        for (int i = 1; i < 11; i++) {
+        for (int i = 0; i < 9; i++) {
             apple = new ItemView(getContext());
             apple.setMyId(i);
             apple.setImageResource(mBackgourRes);
             MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
-            lp.x = 10 + i * itemWidth;
-            lp.y = 10 + 500;
+            //中间338 - 4.5个 50
+            lp.x = DensityUtil.dip2px(getContext(), 108) + i * itemWidth;
+            lp.y = DensityUtil.dip2px(getContext(), 300);
             apple.setSrcX((int) lp.x);
             apple.setSrcY((int) lp.y);
             apple.setLayoutParams(lp);
@@ -220,9 +224,9 @@ public class GameBgView extends ViewGroup {
                                     }
 
                                     layoutParams.isDrag = true;
-                                    layoutParams.x = (int) mBoxView.getLayoutX(boxPosition);
-                                    layoutParams.y = (int) mBoxView.getY() + mBoxView.getHeight()
-                                            - v.getHeight();
+                                    int[] location = mBoxView.getLayoutLocation(boxPosition, itemWidth);
+                                    layoutParams.x = location[0];
+                                    layoutParams.y = location[1];
                                     requestLayout();
                                     layoutParams.isDrag = false;
                                     requestLayout();
@@ -240,10 +244,10 @@ public class GameBgView extends ViewGroup {
                                             //mBoxView.getBoxArray()[position] = -1;
                                             //飞到原来的盒子当中
                                             layoutParams.isDrag = true;
-                                            layoutParams.x = (int) mBoxView.getLayoutX(position);
-                                            layoutParams.y =
-                                                    (int) mBoxView.getY() + mBoxView.getHeight() - v
-                                                            .getHeight();
+                                            int[] location =
+                                                    mBoxView.getLayoutLocation(boxPosition, itemWidth);
+                                            layoutParams.x = location[0];
+                                            layoutParams.y = location[1];
                                             requestLayout();
                                             layoutParams.isDrag = false;
                                             requestLayout();
@@ -318,6 +322,7 @@ public class GameBgView extends ViewGroup {
             });
         }
 
+        //设置出现 消失动画
         LayoutTransition transition = new LayoutTransition();
 
         PropertyValuesHolder appearingScaleX =
@@ -436,8 +441,9 @@ public class GameBgView extends ViewGroup {
                 apple = new ItemView(getContext());
                 apple.setImageResource(mBackgourRes);
                 MyLayoutParams lp = new MyLayoutParams(itemWidth, itemWidth);
-                lp.x = (int) boxList.get(j).getX() + i * itemWidth;
-                lp.y = (int) boxList.get(j).getY() + boxList.get(j).getHeight() - itemWidth;
+                int[] position = boxList.get(j).getLayoutLocation(i, itemWidth);
+                lp.x = position[0];
+                lp.y = position[1];
                 apple.setSrcX((int) lp.x);
                 apple.setSrcY((int) lp.y);
 
@@ -452,8 +458,8 @@ public class GameBgView extends ViewGroup {
         }
     }
 
-
-    private @IdRes int getFrultBackgroud() {
+    private @IdRes
+    int getFrultBackgroud() {
         Random random = new Random();
         int value = random.nextInt(4);
         int resId;
@@ -468,9 +474,9 @@ public class GameBgView extends ViewGroup {
                 resId = R.mipmap.fruit_3;
                 break;
             case 3:
-                default:
-                    resId = R.mipmap.fruit_4;
-                    break;
+            default:
+                resId = R.mipmap.fruit_4;
+                break;
         }
         return resId;
     }

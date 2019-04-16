@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.example.zhujiang.myapplication.drawableSpit.DrawableSpitActivity">
+
+
+    <ImageView
+        android:id="@+id/iv_src"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#234889"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#789123"/>
+
+        <ImageView
+            android:id="@+id/iv_2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#789123"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#546789"/>
+
+        <ImageView
+            android:id="@+id/iv_4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#789123"/>
+
+    </LinearLayout>
+
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/drawerLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#956712"-->
+        <!--android:layout_gravity="center">-->
+
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_1"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="#345123"-->
+            <!--android:layout_marginRight="-1px"-->
+            <!--android:layout_marginBottom="-1px"-->
+            <!--android:layout_toLeftOf="@id/line_center"-->
+            <!--android:layout_above="@id/line_center"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_2"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginLeft="-1px"-->
+            <!--android:layout_marginBottom="-1px"-->
+            <!--android:layout_toRightOf="@id/line_center"-->
+            <!--android:layout_above="@id/line_center"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_3"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginTop="-1px"-->
+            <!--android:layout_marginRight="-1px"-->
+            <!--android:layout_toLeftOf="@id/line_center"-->
+            <!--android:layout_below="@id/line_center"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_4"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginLeft="-1px"-->
+            <!--android:layout_marginTop="-1px"-->
+            <!--android:layout_below="@id/line_center"-->
+            <!--android:layout_toRightOf="@id/line_center"/>-->
+
+        <!--<View-->
+            <!--android:id="@+id/line_center"-->
+            <!--android:layout_width="2px"-->
+            <!--android:layout_height="2px"-->
+            <!--android:background="#ff0000"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"/>-->
+
+
+    <!--</RelativeLayout>-->
+
+</LinearLayout>

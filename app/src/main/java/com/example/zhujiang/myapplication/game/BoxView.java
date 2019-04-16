@@ -42,18 +42,23 @@ public class BoxView extends AppCompatImageView {
             }
         }
 
-        int middle = BOX_SIZE /2;
-        int position;
-        for (int i= 0; i<= middle; i++) {
-            position = middle +i;
-            if (checkPosition(position)) {
-                return position;
+        //int middle = BOX_SIZE /2;
+        //int position;
+        //for (int i= 0; i<= middle; i++) {
+        //    position = middle +i;
+        //    if (checkPosition(position)) {
+        //        return position;
+        //    }
+        //    position = middle -i;
+        //    if (checkPosition(position)) {
+        //        return position;
+        //    }
+        //
+        //}
+        for (int i=0; i< BOX_SIZE; i++) {
+            if (boxArray[i] == -1) {
+                return i;
             }
-            position = middle -i;
-            if (checkPosition(position)) {
-                return position;
-            }
-
         }
         return -1;
     }
@@ -110,10 +115,17 @@ public class BoxView extends AppCompatImageView {
         return (boxArray[position] == -1);
     }
 
-    public int getLayoutX(int postion) {
-        int width  = getMeasuredWidth() / BOX_SIZE;
-        float  x = getX();
+    public int[] getLayoutLocation(int postion, int itemWidth) {
+
+        int[] size=  new int[2];
+
+        size[0] = (int) (getX() + postion%3 * itemWidth);
+        size[1] = (int) (getY()  + getHeight() - (postion/3 + 1) * itemWidth);
+
+        //int width  = getMeasuredWidth() / BOX_SIZE;
+        //
+        //float  x = getX();
         //从中间开始，左右20个单位
-       return (int) (getX() +  postion * width);
+       return size;
     }
 }

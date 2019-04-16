@@ -267,6 +267,19 @@ public class WalkViewBG extends ViewGroup {
                 mNowWalkView.setSelected(true);
                 mNowWalkView.setStep(1);
                 alphaAnimationNow();
+
+
+                //判断顺序，偶数from  奇数to, 当前路线是否正确
+                boolean isRight;
+                if (mMoveList.size() % 2 == 0) {
+                    isRight = (mNowWalkView.getValue() == mWlakTo.getValue());
+                } else {
+                    isRight = (mNowWalkView.getValue() == mWlakFrom.getValue());
+                }
+                if (!isRight) {
+                    list.get(position).setBackgroundResource(R.drawable.bg_game_walk_step2);
+                }
+
                 SoundManager.getInstance(getContext()).play(SoundManager.VIDEO_MOVE);
                 if (mLastPostion != -1) {
                     WlakView last = list.get(mLastPostion);
@@ -626,6 +639,7 @@ public class WalkViewBG extends ViewGroup {
             list.get(position).setStep(0);
             list.get(position).setAlpha(1f);
             list.get(position).setSelected(false);
+            list.get(position).setBackgroundResource(R.drawable.btn_walk_selector);
         }
         mMoveList.clear();
         mLastPostion = -1;

@@ -60,4 +60,27 @@
         android:text="点击我"/>
 
 
+    <LinearLayout
+        android:id="@+id/layout_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@mipmap/yugang"/>
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@mipmap/yugang"/>
+
+    </LinearLayout>
+
+
+
 </RelativeLayout>

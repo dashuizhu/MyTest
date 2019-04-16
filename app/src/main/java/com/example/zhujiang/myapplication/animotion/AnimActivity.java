@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -21,6 +23,8 @@ public class AnimActivity extends AppCompatActivity {
   @BindView(R.id.tv_1) TextView mTv1;
   @BindView(R.id.tv_2) TextView mTv2;
   @BindView(R.id.tv_3) TextView mTv3;
+  @BindView(R.id.iv) ImageView mIv;
+  @BindView(R.id.iv2) ImageView mIv2;
   @BindView(R.id.layout) RelativeLayout mLayout;
   @BindView(R.id.cb_box) CheckBox mCbBox;
 
@@ -31,12 +35,43 @@ public class AnimActivity extends AppCompatActivity {
     initViews();
   }
 
+  My3dAnimation my3dAnimation;
+  private final static int ROTATE_X = 0;
+  private final static int ROTATE_Y = 1;
+
   private void initViews() {
     mCbBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         startAnim(isChecked);
       }
     });
+
+    findViewById(R.id.layout_window).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        float centerX = v.getWidth() / 2.0f;
+        float centerY = v.getHeight() / 2.0f;
+        centerX = 0;
+        my3dAnimation = new My3dAnimation(ROTATE_Y, 0, -60, centerX,
+                  centerY, 310f);
+        my3dAnimation.setDuration(1000);
+        my3dAnimation.setInterpolator(new LinearInterpolator());
+        my3dAnimation.setFillAfter(true);
+        mIv.startAnimation(my3dAnimation);
+
+
+        My3dAnimation my3dAnimationRight = new My3dAnimation(ROTATE_Y, 0, 60, mIv2.getWidth(),
+                centerY, 310f);
+        my3dAnimationRight.setDuration(1000);
+        my3dAnimationRight.setInterpolator(new LinearInterpolator());
+        my3dAnimationRight.setFillAfter(true);
+        mIv2.startAnimation(my3dAnimationRight);
+
+
+
+      }
+    });
+
   }
 
   private void startAnim(final boolean isShow) {

@@ -1,1 +1,1 @@
-include ':app', ':demo', ':speechDemo', 'X5WebDemo','example'
+include ':app', ':demo', ':speechDemo', ':instantapp', 'X5WebDemo','example', 'Recordlibrary','HandWriting-master'

@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
  * Created by Administrator on 2016/3/22.
  */
 public class DensityUtil {
+
   private static final String TAG = DensityUtil.class.getSimpleName();
 
   // 当前屏幕的densityDpi

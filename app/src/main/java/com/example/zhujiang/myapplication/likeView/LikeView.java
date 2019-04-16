@@ -95,21 +95,36 @@ public class LikeView extends View implements View.OnClickListener{
       canvas.drawBitmap(bitmap3, 0 ,0 +bitmap.getHeight() , mPaint);
       canvas.drawText("" + number, 0 + bitmap3.getWidth(), bitmap.getHeight() + (bitmap3.getHeight() - textHeight)/2, mPaint);
     }
-
+    Log.w("test", " draw draw ");
     super.onDraw(canvas);
   }
 
 
   @Override public void onClick(View v) {
     Log.e("likeView", "click " + isCheck);
-    isCheck = !isCheck;
-    if (isCheck) {
-      number ++;
-    } else {
-      number --;
-    }
-    invalidate();
-    test();
+
+    Log.w("test", " test draw start");
+    ScaleAnimation scal  = new ScaleAnimation(1, 1.2f,1, 1.2f);
+    scal.setDuration(150);
+    scal.setFillAfter(true);
+    this.startAnimation(scal);
+    setEnabled(false);
+    Log.w("test", " test draw nover");
+    this.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        isCheck = !isCheck;
+        if (isCheck) {
+          number ++;
+        } else {
+          number --;
+        }
+        //invalidate();
+        test();
+        setEnabled(true);
+      }
+    }, 150);
+
   }
 
   private void test() {
@@ -135,10 +150,10 @@ public class LikeView extends View implements View.OnClickListener{
                    （第五个参数，第六个参数），（第七个参数,第八个参数）是用来指定缩放的中心点
                     0.5f代表从中心缩放
              */
-    ScaleAnimation scaleAnimation = new ScaleAnimation(1,1.2f,1,1.2f,
+    ScaleAnimation scaleAnimation = new ScaleAnimation(1.2f,1,1.2f,1,
             Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,0);
     //3秒完成动画
-    scaleAnimation.setDuration(200);
+    scaleAnimation.setDuration(150);
     //将AlphaAnimation这个已经设置好的动画添加到 AnimationSet中
     animationSet.addAnimation(scaleAnimation);
 
