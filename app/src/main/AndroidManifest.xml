@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zhujiang.myapplication">
-    <!-- 添加必要的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" /> <!-- 打开闪光灯 -->
-    <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- 许可使用照相机 -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 许可调用相机硬件 -->
-    <uses-feature android:name="android.hardware.camera" /> <!-- 许可调用相机自动对焦 -->
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <uses-permission android:name="com.person.buddy.permission.JPUSH_MESSAGE" /> <!-- Required -->
-    <permission
-        android:name="com.mytest.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".MyApplication"
@@ -44,7 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".phone.GetPhoneActivity"></activity>
+        <activity android:name=".svg.SvgActivity"></activity>
+        <activity android:name=".ontouch.OntouchActivity" />
+        <activity android:name=".changeImage.WebDataActivity" />
+        <activity android:name=".mask.MaskActivity" />
+        <activity android:name=".lifecycle.LifecycleActivity" />
+        <activity android:name=".phone.GetPhoneActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -71,10 +42,6 @@
         <activity
             android:name=".qrcode.ActivityScanerCode"
             android:screenOrientation="portrait" /> <!-- ShareSDK的activity -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="561cae6ae0f55abd990035bf" />
-
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -114,92 +81,25 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".jchat.LoginActivity" /> <!-- 极光im -->
+        <activity android:name=".jchat.LoginActivity" />
+        <activity android:name=".jchat.ChatActivity" /> <!-- 极光im -->
         <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
-        <service
-            android:name="cn.jpush.android.service.PushService"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-            </intent-filter>
-        </service> <!-- Required SDK核心功能 -->
-        <receiver
-            android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <!-- Required 显示通知栏 -->
-                <category android:name="com.mytest" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <!-- Optional -->
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="com.mytest" />
-            </intent-filter>
-        </receiver> <!-- Required SDK核心功能 -->
-        <receiver
-            android:name="cn.jpush.im.android.helpers.IMReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.im.android.action.IM_RESPONSE" />
-                <action android:name="cn.jpush.im.android.action.NOTIFICATION_CLICK_PROXY" />
-
-                <category android:name="com.mytest" />
-            </intent-filter>
-        </receiver> <!-- Required SDK核心功能 -->
-        <receiver
-            android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" /> <!-- Required since JCore 1.1.7. SDK 核心功能 -->
-        <provider
-            android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="im.sdk.debug.DataProvider"
-            android:exported="true" /> <!-- Required. For publish channel feature -->
+        <activity android:name=".runText.RunTextActivity" /> <!-- Required SDK核心功能 -->
+        <activity android:name=".localmedia.LocalMediaActivity" /> <!-- Required SDK核心功能 -->
+        <activity android:name=".listView.ListViewActivity2" /> <!-- Required SDK核心功能 -->
+        <activity android:name=".collaspingLayout.TabLayoutTestActivity" /> <!-- Required since JCore 1.1.7. SDK 核心功能 -->
+        <activity android:name=".animotion.AnimActivity" /> <!-- Required. For publish channel feature -->
         <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。 -->
         <!-- 例如: -->
         <!-- 发到 Google Play 的APK可以设置为 google-play; -->
         <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
         <!-- 目前这个渠道统计功能的报表还未开放。 -->
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default" /> <!-- Required. AppKey copied from Portal -->
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="a11540abdf145f446a417099" />
-
-        <activity android:name=".jchat.ChatActivity" />
-        <activity android:name=".runText.RunTextActivity" />
-        <activity android:name=".localmedia.LocalMediaActivity" />
-        <activity android:name=".listView.ListViewActivity2" />
-        <activity android:name=".collaspingLayout.TabLayoutTestActivity" />
-        <activity android:name=".animotion.AnimActivity" />
-        <activity android:name=".view.ViewActivity" />
+        <activity android:name=".view.ViewActivity" /> <!-- Required. AppKey copied from Portal -->
         <activity android:name=".theme.ThemeChangeActivity" />
         <activity android:name=".pdf.PdfShowActivity" />
         <activity android:name=".faceonline.OnlineFaceDemo" />
         <activity android:name=".faceonline.BaseVideoActivity" />
-
-        <meta-data
-            android:name="IFLYTEK_APPKEY"
-            android:value="&apos;5ac4416b&apos;" />
-        <meta-data
-            android:name="IFLYTEK_CHANNEL"
-            android:value="Android_Demo" />
-
         <activity android:name=".recycler.RecyclerTest" />
         <activity android:name=".TestView" />
         <activity android:name=".changeImage.ChagneImageActivity" />
@@ -246,8 +146,113 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".recordmp3.Mp3recordActivity"
-            android:screenOrientation="portrait" /> <!-- <activity android:name=".SkipActvity"></activity> -->
+            android:screenOrientation="portrait" />
         <activity android:name=".parent.ParentViewActivity" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="561cae6ae0f55abd990035bf" />
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="a11540abdf145f446a417099" />
+        <meta-data
+            android:name="IFLYTEK_APPKEY"
+            android:value="&apos;5ac4416b&apos;" />
+        <meta-data
+            android:name="IFLYTEK_CHANNEL"
+            android:value="Android_Demo" />
+
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="im.sdk.debug.DataProvider"
+            android:exported="true" />
+
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- Required 显示通知栏 -->
+                <category android:name="com.mytest" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="com.mytest" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="cn.jpush.im.android.helpers.IMReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.im.android.action.IM_RESPONSE" />
+                <action android:name="cn.jpush.im.android.action.NOTIFICATION_CLICK_PROXY" />
+
+                <category android:name="com.mytest" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" /> <!-- <activity android:name=".SkipActvity"></activity> -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
     </application>
+
+    <permission
+        android:name="com.mytest.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 打开闪光灯 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 许可使用照相机 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 许可调用相机硬件 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 许可调用相机自动对焦 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" /> <!-- Required -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.person.buddy.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

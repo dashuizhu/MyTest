@@ -21,7 +21,6 @@ android {
       }
     }
 
-
     vectorDrawables.useSupportLibrary = true
   }
   buildTypes {
@@ -35,6 +34,10 @@ android {
       jniLibs.srcDirs = ['libs']
     }
   }
+  configurations {
+    cleanedAnnotations
+    compile.exclude group: 'org.jetbrains', module: 'annotations'
+  }
   //  compileOptions {
   //    sourceCompatibility JavaVersion.VERSION_1_8
   //    targetCompatibility JavaVersion.VERSION_1_8
@@ -47,6 +50,7 @@ dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   implementation 'com.android.support:design:27.1.1'
   implementation 'com.android.support:support-vector-drawable:27.1.1'
+  implementation 'com.android.support:appcompat-v7:27.1.1'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
@@ -94,7 +98,8 @@ dependencies {
   implementation project(path: ':Recordlibrary')
 
   implementation 'com.qmuiteam:qmui:1.2.0'
-
+  implementation 'org.jetbrains:annotations-java5:15.0'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply plugin: 'kotlin-android'

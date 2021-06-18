@@ -15,11 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:contentScrim="#b1d813"
-            app:titleEnabled="false"
+            app:titleEnabled="true"
+            app:title="aaadd"
             app:expandedTitleMarginEnd="10dp"
             app:expandedTitleMarginStart="10dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
             <ImageView
@@ -36,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:title=""/>  <!--toolbar折叠后固定于顶部 -->
+                app:title="toole标题"/>  <!--toolbar折叠后固定于顶部 -->
 
             <RelativeLayout
                 android:layout_width="match_parent"

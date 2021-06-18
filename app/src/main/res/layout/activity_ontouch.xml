@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.zhujiang.myapplication.ontouch.OntouchActivity">
+
+<!--    <com.example.zhujiang.myapplication.ontouch.MyScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+        <com.example.zhujiang.myapplication.ontouch.MyGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#890123"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/btn_selector"
+                android:gravity="center"
+                android:text="1"/>
+
+            <com.example.zhujiang.myapplication.ontouch.MyView
+                android:id="@+id/myView"
+                android:layout_width="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="100dp"
+                android:background="#EAc1EA"/>
+
+            <com.example.zhujiang.myapplication.ontouch.MyView
+                android:layout_width="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="100dp"
+                android:background="#789231"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/btn_selector"
+                android:gravity="center"
+                android:onClick="btnClick"
+                android:text="2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#f2add3"
+                android:gravity="center"
+                android:text="3"/>
+
+        </com.example.zhujiang.myapplication.ontouch.MyGroup>
+
+<!--    </com.example.zhujiang.myapplication.ontouch.MyScrollView>-->
+
+</LinearLayout>

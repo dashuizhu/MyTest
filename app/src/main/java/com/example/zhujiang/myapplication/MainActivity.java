@@ -1,18 +1,23 @@
 package com.example.zhujiang.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.example.zhujiang.myapplication.animotion.AnimActivity;
 import com.example.zhujiang.myapplication.banner.MyBannerActivity;
 import com.example.zhujiang.myapplication.bottomnav.BottomNavActivity;
 import com.example.zhujiang.myapplication.changeImage.ChagneImageActivity;
+import com.example.zhujiang.myapplication.changeImage.WebDataActivity;
 import com.example.zhujiang.myapplication.collaspingLayout.CollaspingActivity;
 import com.example.zhujiang.myapplication.collaspingLayout.TabLayoutTestActivity;
 import com.example.zhujiang.myapplication.drawableSpit.DrawableSpitActivity;
@@ -26,9 +31,12 @@ import com.example.zhujiang.myapplication.game.car.CarGameActivity;
 import com.example.zhujiang.myapplication.game.textDraw.TextDrawActivity;
 import com.example.zhujiang.myapplication.game.wheel.FerrisGameActivity;
 import com.example.zhujiang.myapplication.jchat.LoginActivity;
+import com.example.zhujiang.myapplication.lifecycle.LifecycleActivity;
 import com.example.zhujiang.myapplication.likeView.LikeActivity;
 import com.example.zhujiang.myapplication.listView.ListViewActivity2;
 import com.example.zhujiang.myapplication.lottie.LottieActivity;
+import com.example.zhujiang.myapplication.mask.MaskActivity;
+import com.example.zhujiang.myapplication.ontouch.OntouchActivity;
 import com.example.zhujiang.myapplication.parent.ParentViewActivity;
 import com.example.zhujiang.myapplication.phone.GetPhoneActivity;
 import com.example.zhujiang.myapplication.qmui.QmuiWebActivity;
@@ -38,6 +46,7 @@ import com.example.zhujiang.myapplication.recycler.RecyclerTest;
 import com.example.zhujiang.myapplication.runText.RunTextActivity;
 import com.example.zhujiang.myapplication.shared.SharedActivity;
 import com.example.zhujiang.myapplication.statusBar.StatusBarActivity;
+import com.example.zhujiang.myapplication.svg.SvgActivity;
 import com.example.zhujiang.myapplication.theme.ThemeChangeActivity;
 import com.example.zhujiang.myapplication.utils.DensityHelp;
 import com.example.zhujiang.myapplication.utils.SharedPreUser;
@@ -58,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout   mLayout;
     private NavigationView mNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +93,16 @@ public class MainActivity extends AppCompatActivity {
                 String activityName = mMapList.get(i).getActivityName();
                 goActivity(activityName);
 
+                MyApplication.sBean = mMapList.get(i);
+                acb = MyApplication.sBean;
+
                 SharedPreUser.getInstance().put(MainActivity.this, "activity", activityName);
             }
         });
 
-        //String activityName = (String) SharedPreUser.getInstance().get(MainActivity.this, "activity", "");
-        //goActivity(activityName);
-
+        String activityName =
+                (String) SharedPreUser.getInstance().get(MainActivity.this, "activity", "");
+        goActivity(activityName);
     }
 
     private void goActivity(String activityName) {
@@ -136,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         mMapList.add(new ActivityBean(BaseVideoActivity.class, "人脸验证"));
         mMapList.add(new ActivityBean(TestView.class, "测试阴影内容"));
         mMapList.add(new ActivityBean(ChagneImageActivity.class, "生成图片"));
+        mMapList.add(new ActivityBean(WebDataActivity.class, "抓取数据"));
+
         mMapList.add(new ActivityBean(FillBlackActivity.class, "图片拖拽重叠"));
         mMapList.add(new ActivityBean(BottomNavActivity.class, "底部按钮"));
         mMapList.add(new ActivityBean(WalkActivity.class, "游戏-虫子回家"));
@@ -152,6 +167,34 @@ public class MainActivity extends AppCompatActivity {
         mMapList.add(new ActivityBean(ParentViewActivity.class, "父布局"));
         mMapList.add(new ActivityBean(GetPhoneActivity.class, "获取手机联系人"));
         mMapList.add(new ActivityBean(QmuiWebActivity.class, "qmui WEB"));
+        mMapList.add(new ActivityBean(LifecycleActivity.class, "lifecycle"));
+        mMapList.add(new ActivityBean(MaskActivity.class, "mask遮罩"));
+        mMapList.add(new ActivityBean(OntouchActivity.class, "事件分发"));
+        mMapList.add(new ActivityBean(SvgActivity.class, "svg动画"));
         mSimpleAdapter.notifyDataSetChanged();
+
+
+        int r = 0, g, b;
+        int color;
+        for (int i =0; i<10000 ; i+=10)  {
+            g = i /255;
+            b = i%255;
+            color = Color.rgb(r, i /255, i%255);
+            System.out.println(String.format("颜色值 #%02d%02d%02d   %d ", r, g, b , color));
+        }
+
+
+    }
+
+
+    ActivityBean acb ;
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (acb != null) {
+            Log.w("test", " acb " + acb.getName()  + MyApplication.sBean.getName());
+        }
+
     }
 }

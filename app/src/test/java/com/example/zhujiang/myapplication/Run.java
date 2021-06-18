@@ -16,11 +16,49 @@ public class Run {
 
   @Test
   public void main() {
+
+
+
     //start(2, 1, 3, 5, 6, 7, 8);
     //start(1, 8, 9, 10, 11, 12,13);
-    start(1, 8, 9, 10, 11);
+    //start(1, 8, 3, 1, 2, 9, 10, 11);
     //start(2, 1, 3, 5, 6, 7);
     //start(2, 1, 3, 5, 6, 7);
+
+    System.out.println(removeDuplicates( new int[]{1, 2, 3,3,2,3,6,5}));
+  }
+
+  public int removeDuplicates(int[] nums) {
+    if(nums.length<2) return nums.length;
+    int i=0,j=1;
+    while(j<nums.length){
+      if(nums[i]==nums[j]){
+        j++;
+      }
+      else{
+        nums[i+1]=nums[j];
+        i++;
+        j++;
+      }
+    }
+    return i+1;
+  }
+
+  public int maxSubArray(int[] nums) {
+    // write your code here
+    int value, temp =nums[0];
+    value = temp;
+    for (int i=0; i<nums.length; i++) {
+       if (value<0) {
+         value = nums[i];
+       } else {
+         value += nums[i];
+       }
+       if (value> temp) {
+         temp = value;
+       }
+    }
+    return temp;
   }
 
   private <T extends Integer> int start(T... object) {

@@ -14,6 +14,13 @@
         <attr name="bmpSelect" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="MaskImageView">
+
+        <attr name="drawable" format="reference" />
+
+        <attr name="maskDrawable" format="reference" />
+    </declare-styleable>
+
 
         <attr name="main_bg" format="reference|color"/>
         <attr name="main_textcolor" format="reference|color"/>

@@ -39,6 +39,8 @@ public class MyApplication extends Application {
 
   public static boolean isNightMode = false;
 
+  public static ActivityBean sBean;
+
   @Override public void onCreate() {
     super.onCreate();
     UMShareAPI.get(this);

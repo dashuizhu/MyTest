@@ -8,11 +8,28 @@
 
     <com.example.zhujiang.myapplication.view.progressRound.StepRoundView
         android:id="@+id/stepView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="#cacaca"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"/>
+
+
+    <com.example.zhujiang.myapplication.view.progressRound.Progress2View
+        android:id="@+id/progress"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:visibility="gone"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"/>
+
+
+    <com.example.zhujiang.myapplication.stepView.StepArcView
+        android:id="@+id/stepArcView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
 
 </RelativeLayout>

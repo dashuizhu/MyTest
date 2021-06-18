@@ -15,7 +15,7 @@ import com.example.zhujiang.myapplication.R;
 /**
  * @author zhuj 2018/4/12 下午2:25.
  */
-public class CustomToast extends Toast {
+ class CustomToast extends Toast {
 
 
   /**

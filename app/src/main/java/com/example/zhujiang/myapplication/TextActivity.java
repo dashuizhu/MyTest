@@ -9,5 +9,8 @@ public class TextActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
+
+        ActivityBean ac = new ActivityBean(MainActivity.class, "main");
+        MyApplication.sBean = ac;
     }
 }
