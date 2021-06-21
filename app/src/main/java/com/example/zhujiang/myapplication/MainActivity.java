@@ -50,6 +50,7 @@ import com.example.zhujiang.myapplication.svg.SvgActivity;
 import com.example.zhujiang.myapplication.theme.ThemeChangeActivity;
 import com.example.zhujiang.myapplication.utils.DensityHelp;
 import com.example.zhujiang.myapplication.utils.SharedPreUser;
+import com.example.zhujiang.myapplication.view.QRCodeActivity;
 import com.example.zhujiang.myapplication.view.RoundProgressActivity;
 import com.example.zhujiang.myapplication.view.ViewActivity;
 import com.example.zhujiang.myapplication.viewShare.ViewShare1Activity;
@@ -171,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         mMapList.add(new ActivityBean(MaskActivity.class, "mask遮罩"));
         mMapList.add(new ActivityBean(OntouchActivity.class, "事件分发"));
         mMapList.add(new ActivityBean(SvgActivity.class, "svg动画"));
+        mMapList.add(new ActivityBean(QRCodeActivity.class, "健康码"));
         mSimpleAdapter.notifyDataSetChanged();
 
 

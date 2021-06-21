@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.zhujiang.myapplication.view.RoundProgressActivity">
 
+    <com.example.zhujiang.myapplication.view.scroll.HorizontalFeatureScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
     <com.example.zhujiang.myapplication.view.progressRound.StepRoundView
         android:id="@+id/stepView"
@@ -31,5 +39,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 
+        </RelativeLayout>
+    </com.example.zhujiang.myapplication.view.scroll.HorizontalFeatureScrollView>
 
 </RelativeLayout>
